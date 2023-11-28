@@ -120,6 +120,9 @@
     <ClCompile Include="..\..\dlls\shotgun.cpp">
       <Filter>Source Files\_hl\dlls</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\super_shotgun.cpp">
+      <Filter>Source Files\_hl\dlls</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\dlls\tripmine.cpp">
       <Filter>Source Files\_hl\dlls</Filter>
     </ClCompile>

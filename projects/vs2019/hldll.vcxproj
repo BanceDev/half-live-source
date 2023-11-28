@@ -190,6 +190,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClCompile Include="..\..\dlls\scientist.cpp" />
     <ClCompile Include="..\..\dlls\scripted.cpp" />
     <ClCompile Include="..\..\dlls\shotgun.cpp" />
+    <ClCompile Include="..\..\dlls\super_shotgun.cpp" />
     <ClCompile Include="..\..\dlls\singleplay_gamerules.cpp" />
     <ClCompile Include="..\..\dlls\skill.cpp" />
     <ClCompile Include="..\..\dlls\sound.cpp" />
