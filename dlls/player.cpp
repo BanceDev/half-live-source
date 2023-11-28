@@ -374,6 +374,13 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 
 
 	CBaseEntity* pAttacker = CBaseEntity::Instance(pevAttacker);
+	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
+        CBasePlayer *pAttackPlayer = (CBasePlayer*)pAttacker;
+        if (pAttackPlayer->m_fQuadDamage) {
+			flDamage *= 4;
+		}
+    }
+	
 
 	if (!g_pGameRules->FPlayerCanTakeDamage(this, pAttacker))
 	{
@@ -2525,6 +2532,8 @@ void CBasePlayer::PostThink()
 
 	// do weapon stuff
 	ItemPostFrame();
+	// do quad stuff
+	QuadPostFrame();
 
 	// check to see if player landed hard enough to make a sound
 	// falling farther than half of the maximum safe distance, but not as far a max safe distance will
@@ -2812,6 +2821,8 @@ void CBasePlayer::Spawn()
 	m_bitsDamageType = 0;
 	m_afPhysicsFlags = 0;
 	m_fLongJump = false; // no longjump module.
+	m_fQuadDamage = false; // no quad damage
+	m_flQuadDamageTime = 0; // no cooldown since player doesn't start with quad
 
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "slj", "0");
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "hl", "1");
@@ -3857,6 +3868,16 @@ void CBasePlayer::ItemPostFrame()
 		return;
 
 	m_pActiveItem->ItemPostFrame();
+}
+
+void CBasePlayer::QuadPostFrame() {
+	if (gpGlobals->time < m_flQuadDamageTime) {
+		return;
+	}
+
+	//turn off damage multiplier and the glow
+	m_fQuadDamage = false;
+	pev->renderfx = kRenderFxNone;
 }
 
 int CBasePlayer::AmmoInventory(int iAmmoIndex)

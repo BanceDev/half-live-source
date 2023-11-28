@@ -336,4 +336,64 @@ class CItemLongJump : public CItem
 	}
 };
 
-LINK_ENTITY_TO_CLASS(item_longjump, CItemLongJump);
+//LINK_ENTITY_TO_CLASS(item_longjump, CItemLongJump);
+
+class CQuadDamage : public CItem
+{
+	void Spawn() override
+	{
+		Precache();
+		SET_MODEL(ENT(pev), "models/w_quad_damage.mdl");
+		pev->renderfx = kRenderFxGlowShell;
+		pev->rendercolor = Vector( 128, 0, 133 );	// RGB 
+		pev->renderamt = 100;	// Shell size
+
+		CItem::Spawn();
+	}
+	void Precache() override
+	{
+		PRECACHE_MODEL("models/w_quad_damage.mdl");
+		PRECACHE_SOUND("items/damage_on.wav");
+	}
+	bool MyTouch(CBasePlayer* pPlayer) override
+	{
+		if (pPlayer->m_fQuadDamage)
+		{
+			return false;
+		}
+
+
+		pPlayer->m_fQuadDamage = true; // player now has quad damage
+		pPlayer->m_flQuadDamageTime = gpGlobals->time + 30; // quad should only last 30 seconds
+
+		// make player purple
+		pPlayer->pev->renderfx = kRenderFxGlowShell;
+		pPlayer->pev->rendercolor = Vector( 128, 0, 133 );	// RGB
+		pPlayer->pev->renderamt = 100;	// Shell size
+
+		int HUD_GetModelIndex( char *modelname );
+
+		
+
+		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, NULL, pPlayer->pev);
+		WRITE_STRING(STRING(pev->classname));
+		MESSAGE_END();
+
+		EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/damage_on.wav", 1, ATTN_NORM); // Play the quad sound Kelly <3
+		return true;
+	}
+	CBaseEntity* Respawn() override
+	{
+		SetTouch(NULL);
+		pev->effects |= EF_NODRAW;
+
+		UTIL_SetOrigin(pev, g_pGameRules->VecItemRespawnSpot(this)); // blip to whereever you should respawn.
+
+		SetThink(&CItem::Materialize);
+		pev->nextthink = gpGlobals->time + 60;
+		return this;
+	}
+
+};
+
+LINK_ENTITY_TO_CLASS(item_longjump, CQuadDamage);

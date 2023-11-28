@@ -30,6 +30,7 @@
 #include "UserMessages.h"
 
 #define ITEM_RESPAWN_TIME 30
+#define QUAD_RESPAWN_TIME 60
 #define WEAPON_RESPAWN_TIME 20
 #define AMMO_RESPAWN_TIME 20
 
@@ -433,19 +434,7 @@ void CHalfLifeMultiplay::ClientDisconnected(edict_t* pClient)
 //=========================================================
 float CHalfLifeMultiplay::FlPlayerFallDamage(CBasePlayer* pPlayer)
 {
-	int iFallDamage = (int)falldamage.value;
-
-	switch (iFallDamage)
-	{
-	case 1: //progressive
-		pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
-		return pPlayer->m_flFallVelocity * DAMAGE_FOR_FALL_SPEED;
-		break;
-	default:
-	case 0: // fixed
-		return 10;
-		break;
-	}
+	return 0;
 }
 
 //=========================================================

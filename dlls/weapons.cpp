@@ -271,9 +271,11 @@ void W_Precache()
 	UTIL_PrecacheOther("item_antidote");
 	UTIL_PrecacheOther("item_security");
 	UTIL_PrecacheOther("item_longjump");
+	UTIL_PrecacheOther("item_quad_damage");
 
 	// shotgun
 	UTIL_PrecacheOtherWeapon("weapon_shotgun");
+	UTIL_PrecacheOtherWeapon("weapon_super_shotgun");
 	UTIL_PrecacheOther("ammo_buckshot");
 
 	// crowbar
