@@ -171,6 +171,7 @@ public:
 	bool m_fLongJump;	   // does this player have the longjump module?
 	bool m_fQuadDamage; // does the player have the quad damage item?
 	float m_flQuadDamageTime; //player quad damage allowed time
+	bool m_fQuadStatusChanged;
 
 	float m_tSneaking;
 	int m_iUpdateTime;	  // stores the number of frame ticks before sending HUD update messages

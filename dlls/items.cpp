@@ -364,6 +364,7 @@ class CQuadDamage : public CItem
 
 
 		pPlayer->m_fQuadDamage = true; // player now has quad damage
+		pPlayer->m_fQuadStatusChanged = true;
 		pPlayer->m_flQuadDamageTime = gpGlobals->time + 30; // quad should only last 30 seconds
 
 		// make player purple

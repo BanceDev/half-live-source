@@ -1120,6 +1120,7 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 {
 	alight_t lighting;
 	Vector dir;
+	
 
 	m_pCurrentEntity = IEngineStudio.GetCurrentEntity();
 	IEngineStudio.GetTimes(&m_nFrameCount, &m_clTime, &m_clOldTime);
@@ -1218,6 +1219,23 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 
 
 		IEngineStudio.StudioSetRemapColors(m_nTopColor, m_nBottomColor);
+
+		// if we have the quad damage
+		if (m_pCurrentEntity == gEngfuncs.GetViewModel()) {
+			if (gHUD.m_Health.m_fQuadDamage) {
+				m_pCurrentEntity->curstate.renderfx = kRenderFxGlowShell;
+				m_pCurrentEntity->curstate.renderamt = 10;
+				m_pCurrentEntity->curstate.rendercolor.r = 133;
+				m_pCurrentEntity->curstate.rendercolor.g = 0;
+				m_pCurrentEntity->curstate.rendercolor.b = 128;
+			} else {
+				m_pCurrentEntity->curstate.renderfx = kRenderFxNone;
+				m_pCurrentEntity->curstate.rendercolor.r = 0;
+				m_pCurrentEntity->curstate.rendercolor.g = 0;
+				m_pCurrentEntity->curstate.rendercolor.b = 0;
+			}
+		}
+		
 
 		StudioRenderModel();
 	}

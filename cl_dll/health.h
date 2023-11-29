@@ -53,6 +53,7 @@ public:
 	bool MsgFunc_Health(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_Damage(const char* pszName, int iSize, void* pbuf);
 	int m_iHealth;
+	bool m_fQuadDamage;
 	int m_HUD_dmg_bio;
 	int m_HUD_cross;
 	float m_fAttackFront, m_fAttackRear, m_fAttackLeft, m_fAttackRight;

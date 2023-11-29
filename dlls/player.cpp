@@ -810,8 +810,10 @@ void CBasePlayer::Killed(entvars_t* pevAttacker, int iGib)
 
 	// send "health" update message to zero
 	m_iClientHealth = 0;
+	m_fQuadDamage = false;
 	MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
 	WRITE_SHORT(m_iClientHealth);
+	WRITE_BYTE(m_fQuadDamage);
 	MESSAGE_END();
 
 	// Tell Ammo Hud that the player is dead
@@ -2822,6 +2824,7 @@ void CBasePlayer::Spawn()
 	m_afPhysicsFlags = 0;
 	m_fLongJump = false; // no longjump module.
 	m_fQuadDamage = false; // no quad damage
+	m_fQuadStatusChanged = false; // no quad to have so no update
 	m_flQuadDamageTime = 0; // no cooldown since player doesn't start with quad
 
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "slj", "0");
@@ -3877,6 +3880,7 @@ void CBasePlayer::QuadPostFrame() {
 
 	//turn off damage multiplier and the glow
 	m_fQuadDamage = false;
+	m_fQuadStatusChanged = true;
 	pev->renderfx = kRenderFxNone;
 }
 
@@ -4019,8 +4023,9 @@ void CBasePlayer::UpdateClientData()
 		gDisplayTitle = false;
 	}
 
-	if (pev->health != m_iClientHealth)
+	if (pev->health != m_iClientHealth || m_fQuadStatusChanged)
 	{
+		m_fQuadStatusChanged = false;
 		int iHealth = std::clamp<float>(pev->health, 0.f, (float)(std::numeric_limits<short>::max())); // make sure that no negative health values are sent
 		if (pev->health > 0.0f && pev->health <= 1.0f)
 			iHealth = 1;
@@ -4028,6 +4033,7 @@ void CBasePlayer::UpdateClientData()
 		// send "health" update message
 		MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
 		WRITE_SHORT(iHealth);
+		WRITE_BYTE(m_fQuadDamage);
 		MESSAGE_END();
 
 		m_iClientHealth = pev->health;
