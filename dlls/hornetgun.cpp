@@ -46,7 +46,7 @@ void CHgun::Spawn()
 	m_iDefaultAmmo = HIVEHAND_DEFAULT_GIVE;
 	m_iFirePhase = 0;
 
-	FallInit(); // get ready to fall down.
+	//FallInit(); // get ready to fall down.
 }
 
 

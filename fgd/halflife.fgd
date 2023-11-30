@@ -285,7 +285,6 @@
 		19: "Satchel Charge"
 		20: "Snark"
 		21: "Hornet Gun"
-		22: "Super Shotgun"
 	]
 	explodemagnitude(integer) : "Explode Magnitude (0=none)" : 0
 ]
@@ -2669,7 +2668,6 @@
 @PointClass base(Weapon, Targetx) studio("models/w_357.mdl") = weapon_357 : "357 Handgun" []
 @PointClass base(Weapon, Targetx) studio("models/w_9mmar.mdl") = weapon_9mmAR : "9mm Assault Rifle" []
 @PointClass base(Weapon, Targetx) studio("models/w_shotgun.mdl") = weapon_shotgun : "Shotgun" []
-@PointClass base(Weapon, Targetx) studio("models/w_super_shotgun.mdl") = weapon_super_shotgun : "Super Shotgun" []
 @PointClass base(Weapon, Targetx) studio("models/w_rpg.mdl") = weapon_rpg : "RPG" []
 @PointClass base(Weapon, Targetx) studio("models/w_gauss.mdl") = weapon_gauss : "Gauss Gun" []
 @PointClass base(Weapon, Targetx) studio("models/w_crossbow.mdl") = weapon_crossbow : "Crossbow" 

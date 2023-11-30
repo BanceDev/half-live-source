@@ -38,7 +38,7 @@ void CMP5::Spawn()
 
 	m_iDefaultAmmo = MP5_DEFAULT_GIVE;
 
-	FallInit(); // get ready to fall down.
+	//FallInit(); // get ready to fall down.
 }
 
 

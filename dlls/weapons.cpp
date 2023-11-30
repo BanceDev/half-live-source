@@ -275,7 +275,6 @@ void W_Precache()
 
 	// shotgun
 	UTIL_PrecacheOtherWeapon("weapon_shotgun");
-	UTIL_PrecacheOtherWeapon("weapon_super_shotgun");
 	UTIL_PrecacheOther("ammo_buckshot");
 
 	// crowbar

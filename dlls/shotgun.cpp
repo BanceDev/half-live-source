@@ -36,7 +36,7 @@ void CShotgun::Spawn()
 
 	m_iDefaultAmmo = SHOTGUN_DEFAULT_GIVE;
 
-	FallInit(); // get ready to fall
+	//FallInit(); // get ready to fall
 }
 
 

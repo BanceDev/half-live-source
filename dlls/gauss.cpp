@@ -52,7 +52,7 @@ void CGauss::Spawn()
 
 	m_iDefaultAmmo = GAUSS_DEFAULT_GIVE;
 
-	FallInit(); // get ready to fall down.
+	//FallInit(); // get ready to fall down.
 }
 
 
@@ -122,7 +122,7 @@ void CGauss::PrimaryAttack()
 		return;
 	}
 
-	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] < 2)
+	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] < 10)
 	{
 		PlayEmptySound();
 		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
@@ -132,12 +132,12 @@ void CGauss::PrimaryAttack()
 	m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_FIRE_VOLUME;
 	m_fPrimaryFire = true;
 
-	m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= 2;
+	m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= 10;
 
 	StartFire();
 	m_fInAttack = 0;
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
-	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.2;
+	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.1;
 }
 
 void CGauss::SecondaryAttack()
@@ -167,7 +167,7 @@ void CGauss::SecondaryAttack()
 		if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		{
 			EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/357_cock1.wav", 0.8, ATTN_NORM);
-			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
+			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.1;
 			return;
 		}
 
@@ -179,7 +179,6 @@ void CGauss::SecondaryAttack()
 		// spin up
 		m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
 
-		SendWeaponAnim(GAUSS_SPINUP);
 		m_fInAttack = 1;
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
 		m_pPlayer->m_flStartCharge = gpGlobals->time;
@@ -193,7 +192,6 @@ void CGauss::SecondaryAttack()
 	{
 		if (m_flTimeWeaponIdle < UTIL_WeaponTimeBase())
 		{
-			SendWeaponAnim(GAUSS_SPIN);
 			m_fInAttack = 2;
 		}
 	}
@@ -304,7 +302,7 @@ void CGauss::StartFire()
 	{
 		// fixed damage on primary attack
 #ifdef CLIENT_DLL
-		flDamage = 20;
+		flDamage = 80;
 #else
 		flDamage = gSkillData.plrDmgGauss;
 #endif

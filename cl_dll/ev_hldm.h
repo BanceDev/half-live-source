@@ -17,8 +17,6 @@ void EV_FireGlock1(event_args_t* args);
 void EV_FireGlock2(event_args_t* args);
 void EV_FireShotGunSingle(event_args_t* args);
 void EV_FireShotGunDouble(event_args_t* args);
-void EV_FireSuperShotGunSingle(event_args_t* args);
-void EV_FireSuperShotGunDouble(event_args_t* args);
 void EV_FireMP5(event_args_t* args);
 void EV_FireMP52(event_args_t* args);
 void EV_FirePython(event_args_t* args);

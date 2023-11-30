@@ -112,7 +112,6 @@ public:
 #define SHOTGUN_MAX_CLIP 8
 #define CROSSBOW_MAX_CLIP 5
 #define RPG_MAX_CLIP 1
-#define SUPER_SHOTGUN_MAX_CLIP 2
 #define GAUSS_MAX_CLIP WEAPON_NOCLIP
 #define EGON_MAX_CLIP WEAPON_NOCLIP
 #define HORNETGUN_MAX_CLIP WEAPON_NOCLIP
@@ -131,7 +130,7 @@ public:
 #define SHOTGUN_DEFAULT_GIVE 12
 #define CROSSBOW_DEFAULT_GIVE 5
 #define RPG_DEFAULT_GIVE 1
-#define GAUSS_DEFAULT_GIVE 20
+#define GAUSS_DEFAULT_GIVE 50
 #define EGON_DEFAULT_GIVE 20
 #define HANDGRENADE_DEFAULT_GIVE 5
 #define SATCHEL_DEFAULT_GIVE 1
@@ -1220,36 +1219,4 @@ public:
 
 private:
 	unsigned short m_usSnarkFire;
-};
-
-class CSuperShotgun : public CBasePlayerWeapon
-{
-	public:
-		void Spawn() override;
-		void Precache() override;
-		int iItemSlot() override { return 3; }
-		bool GetItemInfo(ItemInfo* p) override;
-
-		void PrimaryAttack() override;
-		void SecondaryAttack() override;
-		bool Deploy() override;
-		void Reload() override;
-		void WeaponIdle() override;
-		void ItemPostFrame() override;
-		int m_fInReload; //TODO: not used, remove
-		float m_flNextReload;
-		int m_iShell;
-
-		bool UseDecrement() override
-		{
-	#if defined(CLIENT_WEAPONS)
-			return true;
-	#else
-			return false;
-	#endif
-		}
-
-	private:
-		unsigned short m_usDoubleFire;
-		unsigned short m_usSingleFire;
 };

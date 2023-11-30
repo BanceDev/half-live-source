@@ -279,9 +279,6 @@
     <ClCompile Include="..\..\dlls\shotgun.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\super_shotgun.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\singleplay_gamerules.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
