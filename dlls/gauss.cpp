@@ -52,6 +52,7 @@ void CGauss::Spawn()
 
 	m_iDefaultAmmo = GAUSS_DEFAULT_GIVE;
 
+	Materialize();
 	//FallInit(); // get ready to fall down.
 }
 

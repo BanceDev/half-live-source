@@ -42,6 +42,7 @@ void CEgon::Spawn()
 
 	m_iDefaultAmmo = EGON_DEFAULT_GIVE;
 
+	Materialize();
 	//FallInit(); // get ready to fall down.
 }
 
