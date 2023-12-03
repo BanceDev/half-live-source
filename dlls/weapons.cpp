@@ -272,6 +272,7 @@ void W_Precache()
 	UTIL_PrecacheOther("item_security");
 	UTIL_PrecacheOther("item_longjump");
 	UTIL_PrecacheOther("item_quad_damage");
+	UTIL_PrecacheOther("item_armor");
 
 	// shotgun
 	UTIL_PrecacheOtherWeapon("weapon_shotgun");

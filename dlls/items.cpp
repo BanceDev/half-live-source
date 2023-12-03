@@ -252,7 +252,76 @@ class CItemBattery : public CItem
 	}
 };
 
-LINK_ENTITY_TO_CLASS(item_battery, CItemBattery);
+
+//////////////////////
+//    Mega Armor    //
+//////////////////////
+
+class CItemArmor : public CItem
+{
+	void Spawn() override
+	{
+		Precache();
+		SET_MODEL(ENT(pev), "models/w_armor.mdl");
+		CItem::Spawn();
+	}
+	void Precache() override
+	{
+		PRECACHE_MODEL("models/w_armor.mdl");
+		PRECACHE_SOUND("items/gunpickup2.wav");
+	}
+	bool MyTouch(CBasePlayer* pPlayer) override
+	{
+		if (pPlayer->pev->deadflag != DEAD_NO)
+		{
+			return false;
+		}
+
+		if ((pPlayer->pev->armorvalue < MAX_NORMAL_BATTERY) &&
+			pPlayer->HasSuit())
+		{
+			int pct;
+			char szcharge[64];
+
+			pPlayer->pev->armorvalue += 100;
+			pPlayer->pev->armorvalue = V_min(pPlayer->pev->armorvalue, MAX_NORMAL_BATTERY);
+
+			EMIT_SOUND(pPlayer->edict(), CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM);
+
+			MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, NULL, pPlayer->pev);
+			WRITE_STRING(STRING(pev->classname));
+			MESSAGE_END();
+
+
+			// Suit reports new power level
+			// For some reason this wasn't working in release build -- round it.
+			pct = (int)((float)(pPlayer->pev->armorvalue * 100.0) * (1.0 / MAX_NORMAL_BATTERY) + 0.5);
+			pct = (pct / 5);
+			if (pct > 0)
+				pct--;
+
+			sprintf(szcharge, "!HEV_%1dP", pct);
+
+			//EMIT_SOUND_SUIT(ENT(pev), szcharge);
+			pPlayer->SetSuitUpdate(szcharge, false, SUIT_NEXT_IN_30SEC);
+			return true;
+		}
+		return false;
+	}
+	CBaseEntity* Respawn() override
+	{
+		SetTouch(NULL);
+		pev->effects |= EF_NODRAW;
+
+		UTIL_SetOrigin(pev, g_pGameRules->VecItemRespawnSpot(this)); // blip to whereever you should respawn.
+
+		SetThink(&CItem::Materialize);
+		pev->nextthink = gpGlobals->time + 60;
+		return this;
+	}
+};
+
+LINK_ENTITY_TO_CLASS(item_armor, CItemArmor);
 
 
 class CItemAntidote : public CItem
@@ -391,7 +460,7 @@ class CQuadDamage : public CItem
 		UTIL_SetOrigin(pev, g_pGameRules->VecItemRespawnSpot(this)); // blip to whereever you should respawn.
 
 		SetThink(&CItem::Materialize);
-		pev->nextthink = gpGlobals->time + 60;
+		pev->nextthink = gpGlobals->time + 90;
 		return this;
 	}
 
