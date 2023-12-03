@@ -30,7 +30,7 @@
 #include "UserMessages.h"
 
 #define ITEM_RESPAWN_TIME 30
-#define QUAD_RESPAWN_TIME 60
+#define QUAD_RESPAWN_TIME 90
 #define WEAPON_RESPAWN_TIME 20
 #define AMMO_RESPAWN_TIME 20
 
@@ -140,11 +140,11 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgCrossbowClient = 20;
 
 	// RPG
-	gSkillData.plrDmgRPG = 120;
+	gSkillData.plrDmgRPG = 100;
 
 	// Egon
-	gSkillData.plrDmgEgonWide = 20;
-	gSkillData.plrDmgEgonNarrow = 10;
+	gSkillData.plrDmgEgonWide = 10;
+	gSkillData.plrDmgEgonNarrow = 5;
 
 	// Hand Grendade
 	gSkillData.plrDmgHandGrenade = 100;
