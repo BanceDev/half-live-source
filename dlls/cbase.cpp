@@ -530,13 +530,13 @@ bool CBaseEntity::TakeHealth(float flHealth, int bitsDamageType)
 		return false;
 
 	// heal
-	if (pev->health >= pev->max_health)
+	if (pev->health >= 150)
 		return false;
 
 	pev->health += flHealth;
 
-	if (pev->health > pev->max_health)
-		pev->health = pev->max_health;
+	if (pev->health > 150)
+		pev->health = 150;
 
 	return true;
 }

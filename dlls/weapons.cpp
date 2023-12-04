@@ -273,6 +273,7 @@ void W_Precache()
 	UTIL_PrecacheOther("item_longjump");
 	UTIL_PrecacheOther("item_quad_damage");
 	UTIL_PrecacheOther("item_armor");
+	UTIL_PrecacheOther("item_megahealth");
 
 	// shotgun
 	UTIL_PrecacheOtherWeapon("weapon_shotgun");

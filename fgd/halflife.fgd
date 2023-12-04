@@ -1689,6 +1689,7 @@
 @PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_antidote.mdl" }) = item_antidote : "Poison antidote" []
 @PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_battery.mdl" }) = item_battery : "HEV battery" []
 @PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_armor.mdl" }) = item_armor : "Mega Armor" []
+@PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_megahealth.mdl" }) = item_megahealth : "Mega Health" []
 @PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_medkit.mdl" }) = item_healthkit : "Small Health Kit" []
 @PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_quad_damage.mdl" }) = item_longjump : "Longjump Module" []
 @PointClass size(-16 -16 0, 16 16 36) base(Weapon, Targetx) model({ "path": "models/w_security.mdl" }) = item_security : "Security card" []

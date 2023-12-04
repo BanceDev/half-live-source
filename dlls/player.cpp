@@ -1930,6 +1930,15 @@ void CBasePlayer::PreThink()
 	{
 		pev->velocity = g_vecZero;
 	}
+
+	// downtick for mega health
+	if (pev->health > pev->max_health) {
+		if (gpGlobals->time > m_flHealthTick + 1) {
+			m_flHealthTick = gpGlobals->time;
+			pev->health -= 1;
+		}
+		
+	}
 }
 /* Time based Damage works as follows: 
 	1) There are several types of timebased damage:
@@ -2826,6 +2835,7 @@ void CBasePlayer::Spawn()
 	m_fQuadDamage = false; // no quad damage
 	m_fQuadStatusChanged = false; // no quad to have so no update
 	m_flQuadDamageTime = 0; // no cooldown since player doesn't start with quad
+	m_flHealthTick = gpGlobals->time;
 
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "slj", "0");
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "hl", "1");

@@ -70,7 +70,7 @@ bool CHealthKit::MyTouch(CBasePlayer* pPlayer)
 		return false;
 	}
 
-	if (pPlayer->TakeHealth(gSkillData.healthkitCapacity, DMG_GENERIC))
+	if (pPlayer->TakeHealth(5, DMG_GENERIC))
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, NULL, pPlayer->pev);
 		WRITE_STRING(STRING(pev->classname));
@@ -94,6 +94,96 @@ bool CHealthKit::MyTouch(CBasePlayer* pPlayer)
 	return false;
 }
 
+//-------------------------------------------------------------
+// Mega Health
+//-------------------------------------------------------------
+
+class CMegaHealth : public CItem
+{
+	void Spawn() override;
+	void Precache() override;
+	bool MyTouch(CBasePlayer* pPlayer) override;
+	CBaseEntity* Respawn() override;
+
+	/*
+	int		Save( CSave &save ) override; 
+	int		Restore( CRestore &restore ) override;
+	
+	static	TYPEDESCRIPTION m_SaveData[];
+*/
+};
+
+
+LINK_ENTITY_TO_CLASS(item_megahealth, CMegaHealth);
+
+/*
+TYPEDESCRIPTION	CHealthKit::m_SaveData[] = 
+{
+
+};
+
+
+IMPLEMENT_SAVERESTORE( CHealthKit, CItem);
+*/
+
+void CMegaHealth::Spawn()
+{
+	Precache();
+	SET_MODEL(ENT(pev), "models/w_megahealth.mdl");
+	pev->renderfx = kRenderFxGlowShell;
+	pev->rendercolor = Vector( 136, 8, 8 );	// RGB 
+	pev->renderamt = 50;	// Shell size
+	CItem::Spawn();
+}
+
+void CMegaHealth::Precache()
+{
+	PRECACHE_MODEL("models/w_megahealth.mdl");
+	PRECACHE_SOUND("items/smallmedkit1.wav");
+}
+
+bool CMegaHealth::MyTouch(CBasePlayer* pPlayer)
+{
+	if (pPlayer->pev->deadflag != DEAD_NO)
+	{
+		return false;
+	}
+
+	if (pPlayer->TakeHealth(150, DMG_GENERIC))
+	{
+		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, NULL, pPlayer->pev);
+		WRITE_STRING(STRING(pev->classname));
+		MESSAGE_END();
+
+		EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/smallmedkit1.wav", 1, ATTN_NORM);
+
+		//TODO: incorrect check here, but won't respawn due to respawn delay being -1 in singleplayer
+		if (0 != g_pGameRules->ItemShouldRespawn(this))
+		{
+			Respawn();
+		}
+		else
+		{
+			UTIL_Remove(this);
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+CBaseEntity* CMegaHealth::Respawn() 
+{
+	SetTouch(NULL);
+	pev->effects |= EF_NODRAW;
+
+	UTIL_SetOrigin(pev, g_pGameRules->VecItemRespawnSpot(this)); // blip to whereever you should respawn.
+
+	SetThink(&CItem::Materialize);
+	pev->nextthink = gpGlobals->time + 60;
+	return this;
+}
 
 
 //-------------------------------------------------------------

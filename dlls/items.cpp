@@ -225,7 +225,7 @@ class CItemBattery : public CItem
 			int pct;
 			char szcharge[64];
 
-			pPlayer->pev->armorvalue += gSkillData.batteryCapacity;
+			pPlayer->pev->armorvalue += 5;
 			pPlayer->pev->armorvalue = V_min(pPlayer->pev->armorvalue, MAX_NORMAL_BATTERY);
 
 			EMIT_SOUND(pPlayer->edict(), CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM);
@@ -251,6 +251,8 @@ class CItemBattery : public CItem
 		return false;
 	}
 };
+
+LINK_ENTITY_TO_CLASS(item_battery, CItemBattery);
 
 
 //////////////////////
@@ -415,7 +417,7 @@ class CQuadDamage : public CItem
 		SET_MODEL(ENT(pev), "models/w_quad_damage.mdl");
 		pev->renderfx = kRenderFxGlowShell;
 		pev->rendercolor = Vector( 128, 0, 133 );	// RGB 
-		pev->renderamt = 100;	// Shell size
+		pev->renderamt = 50;	// Shell size
 
 		CItem::Spawn();
 	}
