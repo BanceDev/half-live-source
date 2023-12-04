@@ -501,7 +501,6 @@ void CWorld::Spawn()
 
 void CWorld::Precache()
 {
-	ALERT(at_console, "Hello, world! (from server)\n");
 	// Flag this entity for removal if it's not the actual world entity.
 	if (World != this)
 	{

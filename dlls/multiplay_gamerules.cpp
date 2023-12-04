@@ -29,9 +29,9 @@
 #include "hltv.h"
 #include "UserMessages.h"
 
-#define ITEM_RESPAWN_TIME 30
+#define ITEM_RESPAWN_TIME 20
 #define QUAD_RESPAWN_TIME 90
-#define WEAPON_RESPAWN_TIME 20
+#define WEAPON_RESPAWN_TIME 5
 #define AMMO_RESPAWN_TIME 20
 
 CVoiceGameMgr g_VoiceGameMgr;
@@ -143,7 +143,7 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgRPG = 100;
 
 	// Egon
-	gSkillData.plrDmgEgonWide = 10;
+	gSkillData.plrDmgEgonWide = 7;
 	gSkillData.plrDmgEgonNarrow = 5;
 
 	// Hand Grendade
