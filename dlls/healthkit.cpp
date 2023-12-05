@@ -70,6 +70,10 @@ bool CHealthKit::MyTouch(CBasePlayer* pPlayer)
 		return false;
 	}
 
+	if(pPlayer->pev->max_health) {
+		return false;
+	}
+
 	if (pPlayer->TakeHealth(5, DMG_GENERIC))
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, NULL, pPlayer->pev);

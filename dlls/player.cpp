@@ -1939,6 +1939,12 @@ void CBasePlayer::PreThink()
 		}
 		
 	}
+	// loop music
+	if (gpGlobals->time > m_iMusicLoopTime + 156) {
+		m_iMusicLoopTime = gpGlobals->time;
+		CBaseEntity* pClient = UTIL_GetLocalPlayer();
+		CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
+	}
 }
 /* Time based Damage works as follows: 
 	1) There are several types of timebased damage:
@@ -2693,7 +2699,7 @@ bool IsSpawnPointValid(CBaseEntity* pPlayer, CBaseEntity* pSpot)
 		return false;
 	}
 
-	while ((ent = UTIL_FindEntityInSphere(ent, pSpot->pev->origin, 128)) != NULL)
+	while ((ent = UTIL_FindEntityInSphere(ent, pSpot->pev->origin, 228)) != NULL)
 	{
 		// if ent is a client, don't spawn on 'em
 		if (ent->IsPlayer() && ent != pPlayer)
@@ -2836,6 +2842,8 @@ void CBasePlayer::Spawn()
 	m_fQuadStatusChanged = false; // no quad to have so no update
 	m_flQuadDamageTime = 0; // no cooldown since player doesn't start with quad
 	m_flHealthTick = gpGlobals->time;
+	m_iMusicLoopTime = gpGlobals->time;
+	
 
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "slj", "0");
 	g_engfuncs.pfnSetPhysicsKeyValue(edict(), "hl", "1");

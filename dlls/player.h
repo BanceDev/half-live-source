@@ -173,6 +173,7 @@ public:
 	float m_flQuadDamageTime; //player quad damage allowed time
 	bool m_fQuadStatusChanged;
 	float m_flHealthTick;
+	int m_iMusicLoopTime;
 
 	float m_tSneaking;
 	int m_iUpdateTime;	  // stores the number of frame ticks before sending HUD update messages

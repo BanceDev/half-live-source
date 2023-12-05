@@ -134,7 +134,7 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgM203Grenade = 100;
 
 	// Shotgun buckshot
-	gSkillData.plrDmgBuckshot = 20; // fewer pellets in deathmatch
+	gSkillData.plrDmgBuckshot = 15; // fewer pellets in deathmatch
 
 	// Crossbow
 	gSkillData.plrDmgCrossbowClient = 20;
@@ -143,7 +143,7 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgRPG = 100;
 
 	// Egon
-	gSkillData.plrDmgEgonWide = 7;
+	gSkillData.plrDmgEgonWide = 8;
 	gSkillData.plrDmgEgonNarrow = 5;
 
 	// Hand Grendade
@@ -393,6 +393,10 @@ void CHalfLifeMultiplay::InitHUD(CBasePlayer* pl)
 		MESSAGE_BEGIN(MSG_ONE, SVC_INTERMISSION, NULL, pl->edict());
 		MESSAGE_END();
 	}
+
+	// Start up music
+	CBaseEntity* pClient = UTIL_GetLocalPlayer();
+	CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
 }
 
 //=========================================================
