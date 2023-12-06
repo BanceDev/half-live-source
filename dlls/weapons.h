@@ -110,7 +110,7 @@ public:
 #define MP5_MAX_CLIP 50
 #define MP5_DEFAULT_AMMO 25
 #define SHOTGUN_MAX_CLIP 8
-#define CROSSBOW_MAX_CLIP 5
+#define CROSSBOW_MAX_CLIP 25
 #define RPG_MAX_CLIP 1
 #define GAUSS_MAX_CLIP WEAPON_NOCLIP
 #define EGON_MAX_CLIP WEAPON_NOCLIP
@@ -128,7 +128,7 @@ public:
 #define MP5_DEFAULT_AMMO 25
 #define MP5_M203_DEFAULT_GIVE 5
 #define SHOTGUN_DEFAULT_GIVE 12
-#define CROSSBOW_DEFAULT_GIVE 5
+#define CROSSBOW_DEFAULT_GIVE 50
 #define RPG_DEFAULT_GIVE 2
 #define GAUSS_DEFAULT_GIVE 50
 #define EGON_DEFAULT_GIVE 50
@@ -672,7 +672,6 @@ public:
 	void FireBolt();
 	void FireSniperBolt();
 	void PrimaryAttack() override;
-	void SecondaryAttack() override;
 	bool Deploy() override;
 	void Holster() override;
 	void Reload() override;

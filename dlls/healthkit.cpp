@@ -70,7 +70,7 @@ bool CHealthKit::MyTouch(CBasePlayer* pPlayer)
 		return false;
 	}
 
-	if(pPlayer->pev->max_health) {
+	if(pPlayer->pev->health >= 100) {
 		return false;
 	}
 

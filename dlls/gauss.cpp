@@ -180,6 +180,7 @@ void CGauss::SecondaryAttack()
 		// spin up
 		m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
 
+		SendWeaponAnim(GAUSS_SPINUP);
 		m_fInAttack = 1;
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
 		m_pPlayer->m_flStartCharge = gpGlobals->time;
@@ -193,6 +194,7 @@ void CGauss::SecondaryAttack()
 	{
 		if (m_flTimeWeaponIdle < UTIL_WeaponTimeBase())
 		{
+			SendWeaponAnim(GAUSS_SPIN);
 			m_fInAttack = 2;
 		}
 	}
