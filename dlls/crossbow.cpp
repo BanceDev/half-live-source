@@ -23,7 +23,7 @@
 #include "UserMessages.h"
 
 #ifndef CLIENT_DLL
-#define BOLT_AIR_VELOCITY 1000
+#define BOLT_AIR_VELOCITY 4500
 #define BOLT_WATER_VELOCITY 1000
 
 // UNDONE: Save/restore this?  Don't forget to set classname and LINK_ENTITY_TO_CLASS()
@@ -165,7 +165,7 @@ void CCrossbowBolt::BoltTouch(CBaseEntity* pOther)
 
 	if (g_pGameRules->IsMultiplayer())
 	{
-		// SetThink(&CCrossbowBolt::ExplodeThink);
+		SetThink(&CCrossbowBolt::ExplodeThink);
 		pev->nextthink = gpGlobals->time + 0.1;
 	}
 }
@@ -185,26 +185,8 @@ void CCrossbowBolt::ExplodeThink()
 	int iContents = UTIL_PointContents(pev->origin);
 	int iScale;
 
-	pev->dmg = 40;
+	pev->dmg = 15;
 	iScale = 10;
-
-	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-	WRITE_BYTE(TE_EXPLOSION);
-	WRITE_COORD(pev->origin.x);
-	WRITE_COORD(pev->origin.y);
-	WRITE_COORD(pev->origin.z);
-	if (iContents != CONTENTS_WATER)
-	{
-		WRITE_SHORT(g_sModelIndexFireball);
-	}
-	else
-	{
-		WRITE_SHORT(g_sModelIndexWExplosion);
-	}
-	WRITE_BYTE(iScale); // scale * 10
-	WRITE_BYTE(15);		// framerate
-	WRITE_BYTE(TE_EXPLFLAG_NONE);
-	MESSAGE_END();
 
 	entvars_t* pevOwner;
 
@@ -215,7 +197,7 @@ void CCrossbowBolt::ExplodeThink()
 
 	pev->owner = NULL; // can't traceline attack owner if this is set
 
-	::RadiusDamage(pev->origin, pev, pevOwner, pev->dmg, 128, CLASS_NONE, DMG_BLAST | DMG_ALWAYSGIB);
+	::RadiusDamage(pev->origin, pev, pevOwner, pev->dmg, 64, CLASS_NONE, DMG_BLAST | DMG_ALWAYSGIB);
 
 	UTIL_Remove(this);
 }
@@ -230,6 +212,7 @@ void CCrossbow::Spawn()
 	SET_MODEL(ENT(pev), "models/w_crossbow.mdl");
 
 	m_iDefaultAmmo = CROSSBOW_DEFAULT_GIVE;
+	m_fLeftFire = true;
 
 	// FallInit(); // get ready to fall down.
 	Materialize();
@@ -310,7 +293,7 @@ void CCrossbow::PrimaryAttack()
 // this function only gets called in multiplayer
 void CCrossbow::FireSniperBolt()
 {
-	m_flNextPrimaryAttack = GetNextAttackDelay(0.15);
+	m_flNextPrimaryAttack = GetNextAttackDelay(0.11);
 
 	if (m_iClip == 0)
 	{
@@ -337,7 +320,7 @@ void CCrossbow::FireSniperBolt()
 
 	Vector anglesAim = m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle;
 	UTIL_MakeVectors(anglesAim);
-	Vector vecSrc = m_pPlayer->GetGunPosition() - gpGlobals->v_up * 2;
+	Vector vecSrc = m_pPlayer->GetGunPosition() - gpGlobals->v_up * 5;
 	Vector vecDir = gpGlobals->v_forward;
 
 	UTIL_TraceLine(vecSrc, vecSrc + vecDir * 8192, dont_ignore_monsters, m_pPlayer->edict(), &tr);
@@ -378,11 +361,17 @@ void CCrossbow::FireBolt()
 	// player "shoot" animation
 	m_pPlayer->SetAnimation(PLAYER_ATTACK1);
 
-	Vector anglesAim = m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle;
+	Vector anglesAim = m_pPlayer->pev->v_angle;
 	UTIL_MakeVectors(anglesAim);
-
+	Vector vecSrc = m_pPlayer->GetGunPosition() - (gpGlobals->v_up * 5);
 	anglesAim.x = -anglesAim.x;
-	Vector vecSrc = m_pPlayer->GetGunPosition() - gpGlobals->v_up * 2;
+	if(m_fLeftFire) {
+		vecSrc = vecSrc + (gpGlobals->v_right * 3);
+	} else {
+		vecSrc = vecSrc + (gpGlobals->v_right * 9);
+	}
+	m_fLeftFire = !m_fLeftFire;
+	
 	Vector vecDir = gpGlobals->v_forward;
 
 #ifndef CLIENT_DLL
@@ -408,7 +397,7 @@ void CCrossbow::FireBolt()
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
-	m_flNextPrimaryAttack = GetNextAttackDelay(0.15);
+	m_flNextPrimaryAttack = GetNextAttackDelay(0.11);
 
 	m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.75;
 
@@ -429,7 +418,7 @@ void CCrossbow::Reload()
 		SecondaryAttack();
 	}
 
-	if (DefaultReload(5, CROSSBOW_RELOAD, 4.5))
+	if (DefaultReload(5, CROSSBOW_RELOAD, 4.44))
 	{
 		EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/xbow_reload1.wav", RANDOM_FLOAT(0.95, 1.0), ATTN_NORM, 0, 93 + RANDOM_LONG(0, 0xF));
 	}

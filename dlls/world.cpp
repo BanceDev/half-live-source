@@ -513,6 +513,7 @@ void CWorld::Precache()
 #if 1
 	CVAR_SET_STRING("sv_gravity", "800"); // 67ft/sec
 	CVAR_SET_STRING("sv_stepsize", "18");
+	CVAR_SET_STRING( "sv_maxvelocity", "5000" );
 #else
 	CVAR_SET_STRING("sv_gravity", "384"); // 32ft/sec
 	CVAR_SET_STRING("sv_stepsize", "24");

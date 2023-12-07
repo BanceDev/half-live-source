@@ -92,7 +92,7 @@ public:
 #define _9MM_MAX_CARRY 250
 #define _357_MAX_CARRY 36
 #define BUCKSHOT_MAX_CARRY 125
-#define BOLT_MAX_CARRY 50
+#define BOLT_MAX_CARRY 400
 #define ROCKET_MAX_CARRY 5
 #define HANDGRENADE_MAX_CARRY 10
 #define SATCHEL_MAX_CARRY 5
@@ -110,7 +110,7 @@ public:
 #define MP5_MAX_CLIP 50
 #define MP5_DEFAULT_AMMO 25
 #define SHOTGUN_MAX_CLIP 8
-#define CROSSBOW_MAX_CLIP 25
+#define CROSSBOW_MAX_CLIP 100
 #define RPG_MAX_CLIP 1
 #define GAUSS_MAX_CLIP WEAPON_NOCLIP
 #define EGON_MAX_CLIP WEAPON_NOCLIP
@@ -128,7 +128,7 @@ public:
 #define MP5_DEFAULT_AMMO 25
 #define MP5_M203_DEFAULT_GIVE 5
 #define SHOTGUN_DEFAULT_GIVE 12
-#define CROSSBOW_DEFAULT_GIVE 50
+#define CROSSBOW_DEFAULT_GIVE 200
 #define RPG_DEFAULT_GIVE 2
 #define GAUSS_DEFAULT_GIVE 50
 #define EGON_DEFAULT_GIVE 50
@@ -689,6 +689,7 @@ public:
 private:
 	unsigned short m_usCrossbow;
 	unsigned short m_usCrossbow2;
+	bool m_fLeftFire;
 };
 
 enum shotgun_e

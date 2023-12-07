@@ -4005,6 +4005,9 @@ void CBasePlayer::UpdateClientData()
 			if (g_pGameRules->IsMultiplayer())
 			{
 				FireTargets("game_playerjoin", this, this, USE_TOGGLE, 0);
+				// new music test
+				CBaseEntity* pClient = UTIL_GetLocalPlayer();
+				CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
 			}
 		}
 

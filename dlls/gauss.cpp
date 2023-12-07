@@ -34,10 +34,10 @@ float CGauss::GetFullChargeTime()
 	if (g_pGameRules->IsMultiplayer())
 #endif
 	{
-		return 1.5;
+		return 3;
 	}
 
-	return 4;
+	return 3;
 }
 
 #ifdef CLIENT_DLL

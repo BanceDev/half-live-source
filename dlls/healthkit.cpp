@@ -65,6 +65,8 @@ void CHealthKit::Precache()
 
 bool CHealthKit::MyTouch(CBasePlayer* pPlayer)
 {
+	int health = 5;
+
 	if (pPlayer->pev->deadflag != DEAD_NO)
 	{
 		return false;
@@ -74,7 +76,11 @@ bool CHealthKit::MyTouch(CBasePlayer* pPlayer)
 		return false;
 	}
 
-	if (pPlayer->TakeHealth(5, DMG_GENERIC))
+	if (pPlayer->pev->health >= 95) {
+		health = 100 - pPlayer->pev->health;
+	}
+
+	if (pPlayer->TakeHealth(health, DMG_GENERIC))
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, NULL, pPlayer->pev);
 		WRITE_STRING(STRING(pev->classname));

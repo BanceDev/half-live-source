@@ -137,7 +137,7 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgBuckshot = 15; // fewer pellets in deathmatch
 
 	// Crossbow
-	gSkillData.plrDmgCrossbowClient = 17;
+	gSkillData.plrDmgCrossbowClient = 20;
 
 	// RPG
 	gSkillData.plrDmgRPG = 100;
@@ -393,10 +393,7 @@ void CHalfLifeMultiplay::InitHUD(CBasePlayer* pl)
 		MESSAGE_BEGIN(MSG_ONE, SVC_INTERMISSION, NULL, pl->edict());
 		MESSAGE_END();
 	}
-
-	// Start up music
-	CBaseEntity* pClient = UTIL_GetLocalPlayer();
-	CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
+	// old music spot for ref
 }
 
 //=========================================================
