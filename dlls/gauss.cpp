@@ -163,8 +163,6 @@ void CGauss::SecondaryAttack()
 		return;
 	}
 
-	m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(2.0);
-
 	if (m_fInAttack == 0)
 	{
 		if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
@@ -334,6 +332,7 @@ void CGauss::StartFire()
 #endif
 		// player "shoot" animation
 		m_pPlayer->SetAnimation(PLAYER_ATTACK1);
+		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(2.0);
 	}
 
 	// time until aftershock 'static discharge' sound
