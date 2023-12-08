@@ -185,7 +185,7 @@ void CCrossbowBolt::ExplodeThink()
 	int iContents = UTIL_PointContents(pev->origin);
 	int iScale;
 
-	pev->dmg = 15;
+	pev->dmg = 7;
 	iScale = 10;
 
 	entvars_t* pevOwner;

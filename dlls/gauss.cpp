@@ -163,12 +163,14 @@ void CGauss::SecondaryAttack()
 		return;
 	}
 
+	m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(2.0);
+
 	if (m_fInAttack == 0)
 	{
 		if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		{
 			EMIT_SOUND(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/357_cock1.wav", 0.8, ATTN_NORM);
-			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.1;
+			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 2.2;
 			return;
 		}
 
@@ -228,7 +230,7 @@ void CGauss::SecondaryAttack()
 			StartFire();
 			m_fInAttack = 0;
 			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
-			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1;
+			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 2.0;
 			return;
 		}
 
@@ -262,7 +264,7 @@ void CGauss::SecondaryAttack()
 
 			m_fInAttack = 0;
 			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
-			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
+			m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 2.2;
 
 			SendStopEvent(false);
 
@@ -294,11 +296,11 @@ void CGauss::StartFire()
 
 	if (gpGlobals->time - m_pPlayer->m_flStartCharge > GetFullChargeTime())
 	{
-		flDamage = 200;
+		flDamage = 150;
 	}
 	else
 	{
-		flDamage = 200 * ((gpGlobals->time - m_pPlayer->m_flStartCharge) / GetFullChargeTime());
+		flDamage = 150 * ((gpGlobals->time - m_pPlayer->m_flStartCharge) / GetFullChargeTime());
 	}
 
 	if (m_fPrimaryFire)
@@ -424,9 +426,6 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 				vecDir = r;
 				vecSrc = tr.vecEndPos + vecDir * 8;
 				vecDest = vecSrc + vecDir * 8192;
-
-				// explode a bit
-				m_pPlayer->RadiusDamage(tr.vecEndPos, pev, m_pPlayer->pev, flDamage * n, CLASS_NONE, DMG_BLAST);
 
 				nTotal += 34;
 

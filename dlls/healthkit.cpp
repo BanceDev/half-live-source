@@ -142,7 +142,7 @@ void CMegaHealth::Spawn()
 	SET_MODEL(ENT(pev), "models/w_megahealth.mdl");
 	pev->renderfx = kRenderFxGlowShell;
 	pev->rendercolor = Vector( 136, 8, 8 );	// RGB 
-	pev->renderamt = 50;	// Shell size
+	pev->renderamt = 10;	// Shell size
 	CItem::Spawn();
 }
 

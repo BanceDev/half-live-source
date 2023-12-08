@@ -206,6 +206,7 @@ class CItemBattery : public CItem
 		Precache();
 		SET_MODEL(ENT(pev), "models/w_battery.mdl");
 		CItem::Spawn();
+
 	}
 	void Precache() override
 	{
@@ -265,6 +266,9 @@ class CItemArmor : public CItem
 	{
 		Precache();
 		SET_MODEL(ENT(pev), "models/w_armor.mdl");
+		pev->renderfx = kRenderFxGlowShell;
+		pev->rendercolor = Vector(242, 140, 40);	// RGB 
+		pev->renderamt = 10;	// Shell size
 		CItem::Spawn();
 	}
 	void Precache() override
@@ -417,7 +421,7 @@ class CQuadDamage : public CItem
 		SET_MODEL(ENT(pev), "models/w_quad_damage.mdl");
 		pev->renderfx = kRenderFxGlowShell;
 		pev->rendercolor = Vector( 128, 0, 133 );	// RGB 
-		pev->renderamt = 50;	// Shell size
+		pev->renderamt = 10;	// Shell size
 
 		CItem::Spawn();
 	}
