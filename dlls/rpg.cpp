@@ -420,46 +420,47 @@ void CRpg::Holster()
 
 void CRpg::PrimaryAttack()
 {
-	if (0 != m_iClip)
-	{
-		m_pPlayer->m_iWeaponVolume = LOUD_GUN_VOLUME;
-		m_pPlayer->m_iWeaponFlash = BRIGHT_GUN_FLASH;
-
-#ifndef CLIENT_DLL
-		// player "shoot" animation
-		m_pPlayer->SetAnimation(PLAYER_ATTACK1);
-
-		UTIL_MakeVectors(m_pPlayer->pev->v_angle);
-		Vector vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * 8 + gpGlobals->v_up * -8;
-
-		CRpgRocket* pRocket = CRpgRocket::CreateRpgRocket(vecSrc, m_pPlayer->pev->v_angle, m_pPlayer, this);
-
-		UTIL_MakeVectors(m_pPlayer->pev->v_angle); // RpgRocket::Create stomps on globals, so remake.
-		pRocket->pev->velocity = pRocket->pev->velocity + gpGlobals->v_forward * DotProduct(m_pPlayer->pev->velocity, gpGlobals->v_forward);
-#endif
-
-		// firing RPG no longer turns on the designator. ALT fire is a toggle switch for the LTD.
-		// Ken signed up for this as a global change (sjb)
-
-		int flags;
-#if defined(CLIENT_WEAPONS)
-		flags = FEV_NOTHOST;
-#else
-		flags = 0;
-#endif
-
-		PLAYBACK_EVENT(flags, m_pPlayer->edict(), m_usRpg);
-
-		m_iClip--;
-
-		m_flNextPrimaryAttack = GetNextAttackDelay(1.5);
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.5;
-	}
-	else
+// don't fire underwater
+	if (m_pPlayer->pev->waterlevel == 3)
 	{
 		PlayEmptySound();
+		m_flNextPrimaryAttack = 0.15;
+		return;
 	}
-	UpdateSpot();
+
+	if (m_iClip == 0)
+	{
+		PlayEmptySound();
+		return;
+	}
+
+	m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
+	m_pPlayer->m_iWeaponFlash = BRIGHT_GUN_FLASH;
+
+	m_iClip--;
+
+	// player "shoot" animation
+	m_pPlayer->SetAnimation(PLAYER_ATTACK1);
+
+	UTIL_MakeVectors(m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle);
+
+	// we don't add in player velocity anymore.
+	CGrenade::ShootRocket(m_pPlayer->pev,
+		m_pPlayer->pev->origin + m_pPlayer->pev->view_ofs + gpGlobals->v_forward * 16,
+		gpGlobals->v_forward * 1500);
+
+	int flags;
+#if defined(CLIENT_WEAPONS)
+	flags = FEV_NOTHOST;
+#else
+	flags = 0;
+#endif
+
+	PLAYBACK_EVENT(flags, m_pPlayer->edict(), m_usRpg);
+
+	m_flNextPrimaryAttack = GetNextAttackDelay(0.8);
+	m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.8;
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 5; // idle pretty soon after shooting
 }
 
 
@@ -487,7 +488,6 @@ void CRpg::WeaponIdle()
 		ResetEmptySound();
 	}
 
-	UpdateSpot();
 
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;

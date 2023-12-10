@@ -305,7 +305,7 @@ void CGauss::StartFire()
 	{
 		// fixed damage on primary attack
 #ifdef CLIENT_DLL
-		flDamage = 80;
+		flDamage = 90;
 #else
 		flDamage = 90;
 #endif

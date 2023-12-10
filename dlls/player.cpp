@@ -379,6 +379,9 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
         if (pAttackPlayer->m_fQuadDamage) {
 			flDamage *= 4;
 		}
+		if (pAttacker == this) {
+			flDamage /= 4;
+		}
     }
 	
 
@@ -1940,11 +1943,11 @@ void CBasePlayer::PreThink()
 		
 	}
 	// loop music
-	if (gpGlobals->time > m_iMusicLoopTime + 156) {
-		m_iMusicLoopTime = gpGlobals->time;
-		CBaseEntity* pClient = UTIL_GetLocalPlayer();
-		CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
-	}
+	/*if (gpGlobals->time > m_iMusicLoopTime + 156) {
+		//m_iMusicLoopTime = gpGlobals->time;
+		//CBaseEntity* pClient = UTIL_GetLocalPlayer();
+		//CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
+	}*/
 }
 /* Time based Damage works as follows: 
 	1) There are several types of timebased damage:
@@ -4006,8 +4009,8 @@ void CBasePlayer::UpdateClientData()
 			{
 				FireTargets("game_playerjoin", this, this, USE_TOGGLE, 0);
 				// new music test
-				CBaseEntity* pClient = UTIL_GetLocalPlayer();
-				CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
+				//CBaseEntity* pClient = UTIL_GetLocalPlayer();
+				//CLIENT_COMMAND(pClient->edict(), "cd play 10\n");
 			}
 		}
 
