@@ -3915,6 +3915,7 @@ void CBasePlayer::QuadPostFrame() {
 	m_fSuper = false;
 	m_fSuperStatusChanged = true;
 	pev->renderfx = kRenderFxNone;
+	pev->rendermode = kRenderNormal;
 }
 
 int CBasePlayer::AmmoInventory(int iAmmoIndex)
