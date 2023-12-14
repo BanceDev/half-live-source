@@ -1220,14 +1220,26 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 
 		IEngineStudio.StudioSetRemapColors(m_nTopColor, m_nBottomColor);
 
-		// if we have the quad damage
+		// if we have the super ability
 		if (m_pCurrentEntity == gEngfuncs.GetViewModel()) {
-			if (gHUD.m_Health.m_fQuadDamage) {
+			if (gHUD.m_Health.m_fSuper && gHUD.m_Health.m_iSuperType == 1) {
 				m_pCurrentEntity->curstate.renderfx = kRenderFxGlowShell;
 				m_pCurrentEntity->curstate.renderamt = 10;
 				m_pCurrentEntity->curstate.rendercolor.r = 133;
 				m_pCurrentEntity->curstate.rendercolor.g = 0;
 				m_pCurrentEntity->curstate.rendercolor.b = 128;
+			} else if (gHUD.m_Health.m_fSuper && gHUD.m_Health.m_iSuperType == 2) {
+				m_pCurrentEntity->curstate.renderfx = kRenderFxGlowShell;
+				m_pCurrentEntity->curstate.renderamt = 10;
+				m_pCurrentEntity->curstate.rendercolor.r = 127;
+				m_pCurrentEntity->curstate.rendercolor.g = 255;
+				m_pCurrentEntity->curstate.rendercolor.b = 212;
+			} else if (gHUD.m_Health.m_fSuper && gHUD.m_Health.m_iSuperType == 3) {
+				m_pCurrentEntity->curstate.renderfx = kRenderFxGlowShell;
+				m_pCurrentEntity->curstate.renderamt = 10;
+				m_pCurrentEntity->curstate.rendercolor.r = 255;
+				m_pCurrentEntity->curstate.rendercolor.g = 255;
+				m_pCurrentEntity->curstate.rendercolor.b = 255;
 			} else {
 				m_pCurrentEntity->curstate.renderfx = kRenderFxNone;
 				m_pCurrentEntity->curstate.rendercolor.r = 0;

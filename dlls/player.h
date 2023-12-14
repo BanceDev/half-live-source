@@ -169,9 +169,10 @@ public:
 
 	bool m_fNoPlayerSound; // a debugging feature. Player makes no sound if this is true.
 	bool m_fLongJump;	   // does this player have the longjump module?
-	bool m_fQuadDamage; // does the player have the quad damage item?
-	float m_flQuadDamageTime; //player quad damage allowed time
-	bool m_fQuadStatusChanged;
+	bool m_fSuper; // does the player have a super item?
+	int m_iSuperType; // what type of super does the player have
+	float m_flQuadDamageTime; // cooldown time for super item, not renamed out of convenience
+	bool m_fSuperStatusChanged; // tells the server to update the client information about the super
 	float m_flHealthTick;
 	int m_iMusicLoopTime;
 

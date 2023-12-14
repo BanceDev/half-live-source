@@ -58,6 +58,9 @@ extern edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer);
 
 #define FLASH_DRAIN_TIME 1.2  //100 units/3 minutes
 #define FLASH_CHARGE_TIME 0.2 // 100 units/20 seconds  (seconds per unit)
+#define QUAD_DAMAGE 1
+#define PROTECTION 2
+#define INVISIBILITY 3
 
 // Global Savedata for player
 TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
@@ -372,17 +375,24 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 		return false;
 	// go take the damage first
 
-
+	// handle quad damage
 	CBaseEntity* pAttacker = CBaseEntity::Instance(pevAttacker);
 	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
         CBasePlayer *pAttackPlayer = (CBasePlayer*)pAttacker;
-        if (pAttackPlayer->m_fQuadDamage) {
-			flDamage *= 4;
+        if (pAttackPlayer->m_fSuper) {
+			if (pAttackPlayer->m_iSuperType == QUAD_DAMAGE) {
+				flDamage *= 4;
+			}
 		}
 		if (pAttacker == this) {
 			flDamage /= 4;
 		}
     }
+
+	// if this player has the protection
+	if (m_fSuper && m_iSuperType == PROTECTION) {
+		flDamage = 0;
+	}
 	
 
 	if (!g_pGameRules->FPlayerCanTakeDamage(this, pAttacker))
@@ -813,10 +823,11 @@ void CBasePlayer::Killed(entvars_t* pevAttacker, int iGib)
 
 	// send "health" update message to zero
 	m_iClientHealth = 0;
-	m_fQuadDamage = false;
+	m_fSuper = false;
 	MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
 	WRITE_SHORT(m_iClientHealth);
-	WRITE_BYTE(m_fQuadDamage);
+	WRITE_BYTE(m_fSuper);
+	WRITE_BYTE(m_iSuperType);
 	MESSAGE_END();
 
 	// Tell Ammo Hud that the player is dead
@@ -2841,8 +2852,9 @@ void CBasePlayer::Spawn()
 	m_bitsDamageType = 0;
 	m_afPhysicsFlags = 0;
 	m_fLongJump = false; // no longjump module.
-	m_fQuadDamage = false; // no quad damage
-	m_fQuadStatusChanged = false; // no quad to have so no update
+	m_fSuper = false; // no super item
+	m_iSuperType = QUAD_DAMAGE;
+	m_fSuperStatusChanged = false; // no quad to have so no update
 	m_flQuadDamageTime = 0; // no cooldown since player doesn't start with quad
 	m_flHealthTick = gpGlobals->time;
 	m_iMusicLoopTime = gpGlobals->time;
@@ -3900,8 +3912,8 @@ void CBasePlayer::QuadPostFrame() {
 	}
 
 	//turn off damage multiplier and the glow
-	m_fQuadDamage = false;
-	m_fQuadStatusChanged = true;
+	m_fSuper = false;
+	m_fSuperStatusChanged = true;
 	pev->renderfx = kRenderFxNone;
 }
 
@@ -4047,9 +4059,9 @@ void CBasePlayer::UpdateClientData()
 		gDisplayTitle = false;
 	}
 
-	if (pev->health != m_iClientHealth || m_fQuadStatusChanged)
+	if (pev->health != m_iClientHealth || m_fSuperStatusChanged)
 	{
-		m_fQuadStatusChanged = false;
+		m_fSuperStatusChanged = false;
 		int iHealth = std::clamp<float>(pev->health, 0.f, (float)(std::numeric_limits<short>::max())); // make sure that no negative health values are sent
 		if (pev->health > 0.0f && pev->health <= 1.0f)
 			iHealth = 1;
@@ -4057,7 +4069,8 @@ void CBasePlayer::UpdateClientData()
 		// send "health" update message
 		MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
 		WRITE_SHORT(iHealth);
-		WRITE_BYTE(m_fQuadDamage);
+		WRITE_BYTE(m_fSuper);
+		WRITE_SHORT(m_iSuperType);
 		MESSAGE_END();
 
 		m_iClientHealth = pev->health;

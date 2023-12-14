@@ -100,7 +100,8 @@ bool CHudHealth::MsgFunc_Health(const char* pszName, int iSize, void* pbuf)
 	// TODO: update local health data
 	BEGIN_READ(pbuf, iSize);
 	int x = READ_SHORT();
-	bool q = READ_BYTE();
+	bool s = READ_BYTE();
+	int t = READ_SHORT();
 
 	m_iFlags |= HUD_ACTIVE;
 
@@ -110,7 +111,8 @@ bool CHudHealth::MsgFunc_Health(const char* pszName, int iSize, void* pbuf)
 		m_fFade = FADE_TIME;
 		m_iHealth = x;
 	}
-	m_fQuadDamage = q;
+	m_fSuper = s;
+	m_iSuperType = t;
 
 	return true;
 }

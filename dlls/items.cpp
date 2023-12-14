@@ -375,6 +375,7 @@ class CItemSecurity : public CItem
 
 LINK_ENTITY_TO_CLASS(item_security, CItemSecurity);
 
+// unused item keeping the code in case I need it later
 class CItemLongJump : public CItem
 {
 	void Spawn() override
@@ -411,10 +412,11 @@ class CItemLongJump : public CItem
 	}
 };
 
-//LINK_ENTITY_TO_CLASS(item_longjump, CItemLongJump);
-
-class CQuadDamage : public CItem
+class CSuperItem : public CItem
 {
+	private:
+		int superType = 1;
+
 	void Spawn() override
 	{
 		Precache();
@@ -427,25 +429,45 @@ class CQuadDamage : public CItem
 	}
 	void Precache() override
 	{
+		// TODO: make other super models and cache them
 		PRECACHE_MODEL("models/w_quad_damage.mdl");
 		PRECACHE_SOUND("items/damage_on.wav");
 	}
 	bool MyTouch(CBasePlayer* pPlayer) override
 	{
-		if (pPlayer->m_fQuadDamage)
+		if (pPlayer->m_fSuper)
 		{
 			return false;
 		}
 
 
-		pPlayer->m_fQuadDamage = true; // player now has quad damage
-		pPlayer->m_fQuadStatusChanged = true;
-		pPlayer->m_flQuadDamageTime = gpGlobals->time + 30; // quad should only last 30 seconds
+		pPlayer->m_fSuper = true; // player now has super
+		pPlayer->m_iSuperType = superType;
+		pPlayer->m_fSuperStatusChanged = true;
+		pPlayer->m_flQuadDamageTime = gpGlobals->time + 30; // super hould only last 30 seconds
 
-		// make player purple
-		pPlayer->pev->renderfx = kRenderFxGlowShell;
-		pPlayer->pev->rendercolor = Vector( 128, 0, 133 );	// RGB
-		pPlayer->pev->renderamt = 100;	// Shell size
+		// render fx based on super
+		if (superType == 1) {
+			pPlayer->pev->renderfx = kRenderFxGlowShell;
+			pPlayer->pev->rendercolor = Vector( 128, 0, 133 );	// RGB Boobs color
+			pPlayer->pev->renderamt = 20;	// Shell size
+		}
+		if (superType == 2) {
+			pPlayer->pev->renderfx = kRenderFxGlowShell;
+			pPlayer->pev->rendercolor = Vector(127, 255, 212);	// RGB Green color
+			pPlayer->pev->renderamt = 20;	// Shell size
+		}
+		if (superType == 3) {
+			pPlayer->pev->rendermode = kRenderTransTexture;
+			pPlayer->pev->renderamt = 0;
+		}
+
+		if (superType == 3) {
+			superType = 1;
+		} else {
+			superType++;
+		}
+
 
 		int HUD_GetModelIndex( char *modelname );
 
@@ -467,9 +489,22 @@ class CQuadDamage : public CItem
 
 		SetThink(&CItem::Materialize);
 		pev->nextthink = gpGlobals->time + 90;
+		if (superType == 1) {
+			pev->renderfx = kRenderFxGlowShell;
+			pev->rendercolor = Vector( 128, 0, 133 );	// RGB 
+			pev->renderamt = 10;	// Shell size
+		} else if (superType == 2) {
+			pev->renderfx = kRenderFxGlowShell;
+			pev->rendercolor = Vector(127, 255, 212);	// RGB 
+			pev->renderamt = 10;	// Shell size
+		} else if (superType == 3) {
+			pev->renderfx = kRenderFxGlowShell;
+			pev->rendercolor = Vector(255, 255, 255);	// RGB 
+			pev->renderamt = 10;	// Shell size
+		}
 		return this;
 	}
 
 };
 
-LINK_ENTITY_TO_CLASS(item_longjump, CQuadDamage);
+LINK_ENTITY_TO_CLASS(item_longjump, CSuperItem); // shouldn't have done this but I just dont care anymore
