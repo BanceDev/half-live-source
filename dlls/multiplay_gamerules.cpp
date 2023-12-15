@@ -131,7 +131,7 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgMP5 = 12;
 
 	// M203 grenade
-	gSkillData.plrDmgM203Grenade = 100;
+	gSkillData.plrDmgM203Grenade = 80;
 
 	// Shotgun buckshot
 	gSkillData.plrDmgBuckshot = 18; // fewer pellets in deathmatch
@@ -140,14 +140,14 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgCrossbowClient = 20;
 
 	// RPG
-	gSkillData.plrDmgRPG = 100;
+	gSkillData.plrDmgRPG = 80;
 
 	// Egon
 	gSkillData.plrDmgEgonWide = 8;
 	gSkillData.plrDmgEgonNarrow = 5;
 
 	// Hand Grendade
-	gSkillData.plrDmgHandGrenade = 100;
+	gSkillData.plrDmgHandGrenade = 80;
 
 	// Satchel Charge
 	gSkillData.plrDmgSatchel = 120;

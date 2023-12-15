@@ -391,7 +391,7 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 
 	// if this player has the protection
 	if (m_fSuper && m_iSuperType == PROTECTION) {
-		flDamage = 0;
+		flDamage /= 4;
 	}
 	
 
