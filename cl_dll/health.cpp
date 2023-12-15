@@ -101,7 +101,7 @@ bool CHudHealth::MsgFunc_Health(const char* pszName, int iSize, void* pbuf)
 	BEGIN_READ(pbuf, iSize);
 	int x = READ_SHORT();
 	bool s = READ_BYTE();
-	int t = READ_SHORT();
+	int t = READ_BYTE();
 
 	m_iFlags |= HUD_ACTIVE;
 

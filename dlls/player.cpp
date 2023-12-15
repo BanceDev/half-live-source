@@ -4071,7 +4071,7 @@ void CBasePlayer::UpdateClientData()
 		MESSAGE_BEGIN(MSG_ONE, gmsgHealth, NULL, pev);
 		WRITE_SHORT(iHealth);
 		WRITE_BYTE(m_fSuper);
-		WRITE_SHORT(m_iSuperType);
+		WRITE_BYTE(m_iSuperType);
 		MESSAGE_END();
 
 		m_iClientHealth = pev->health;
