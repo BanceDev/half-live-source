@@ -402,7 +402,7 @@ CGrenade* CGrenade::ShootRocket(entvars_t* pevOwner, Vector vecStart, Vector vec
 	CGrenade* pGrenade = GetClassPtr((CGrenade*)NULL);
 	pGrenade->Spawn();
 	// contact grenades arc lower
-	pGrenade->pev->gravity = -0.1; // lower gravity since grenade is aerodynamic and engine doesn't know it.
+	pGrenade->pev->gravity = -0.01; // lower gravity since grenade is aerodynamic and engine doesn't know it.
 	UTIL_SetOrigin(pGrenade->pev, vecStart);
 	pGrenade->pev->velocity = vecVelocity;
 	pGrenade->pev->angles = UTIL_VecToAngles(pGrenade->pev->velocity);

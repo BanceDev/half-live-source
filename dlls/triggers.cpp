@@ -1914,7 +1914,8 @@ void CBaseTrigger::TeleportTouch(CBaseEntity* pOther)
 	}
 
 	pevToucher->fixangle = 1;
-	pevToucher->velocity = pevToucher->basevelocity = g_vecZero;
+
+	pevToucher->velocity = (pevToucher->velocity.Length() * gpGlobals->v_right);
 }
 
 

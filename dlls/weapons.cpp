@@ -467,6 +467,10 @@ void CBasePlayerItem::Materialize()
 	UTIL_SetOrigin(pev, pev->origin); // link into world.
 	SetTouch(&CBasePlayerItem::DefaultTouch);
 	SetThink(NULL);
+	// add glow shell to weapons for visibility
+	pev->renderfx = kRenderFxGlowShell;
+	pev->rendercolor = Vector(125, 249, 255);
+	pev->renderamt = 20;
 }
 
 //=========================================================

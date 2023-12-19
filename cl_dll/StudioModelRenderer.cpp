@@ -1236,12 +1236,15 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 				m_pCurrentEntity->curstate.rendercolor.b = 212;
 			} else if (gHUD.m_Health.m_fSuper && gHUD.m_Health.m_iSuperType == 3) {
 				m_pCurrentEntity->curstate.renderfx = kRenderFxGlowShell;
-				m_pCurrentEntity->curstate.renderamt = 10;
-				m_pCurrentEntity->curstate.rendercolor.r = 255;
-				m_pCurrentEntity->curstate.rendercolor.g = 255;
-				m_pCurrentEntity->curstate.rendercolor.b = 255;
+				m_pCurrentEntity->curstate.rendermode = kRenderTransColor;
+				m_pCurrentEntity->curstate.renderamt = 5;
+				m_pCurrentEntity->curstate.rendercolor.r = 125;
+				m_pCurrentEntity->curstate.rendercolor.g = 125;
+				m_pCurrentEntity->curstate.rendercolor.b = 125;
+				
 			} else {
 				m_pCurrentEntity->curstate.renderfx = kRenderFxNone;
+				m_pCurrentEntity->curstate.rendermode = kRenderNormal;
 				m_pCurrentEntity->curstate.rendercolor.r = 0;
 				m_pCurrentEntity->curstate.rendercolor.g = 0;
 				m_pCurrentEntity->curstate.rendercolor.b = 0;
@@ -1630,8 +1633,22 @@ void CStudioModelRenderer::StudioRenderModel()
 
 	if (m_pCurrentEntity->curstate.renderfx == kRenderFxGlowShell)
 	{
-		m_pCurrentEntity->curstate.renderfx = kRenderFxNone;
-		StudioRenderFinal();
+		if (strstr(m_pCurrentEntity->model->name, "v_"))
+		{
+			if ( m_pCurrentEntity->curstate.renderamt != 5 )
+			{
+				m_pCurrentEntity->curstate.renderfx = kRenderFxNone;
+				StudioRenderFinal();
+			}
+		}
+		else
+		{
+			if (m_pCurrentEntity->curstate.renderamt != 5 && m_pCurrentEntity->curstate.rendermode != kRenderTransColor)
+			{
+				m_pCurrentEntity->curstate.renderfx = kRenderFxNone;
+				StudioRenderFinal();
+			}
+		}
 
 		if (0 == IEngineStudio.IsHardware())
 		{
