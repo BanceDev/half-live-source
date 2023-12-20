@@ -378,7 +378,7 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 	// handle quad damage
 	CBaseEntity* pAttacker = CBaseEntity::Instance(pevAttacker);
 	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
-        CBasePlayer *pAttackPlayer = (CBasePlayer*)pAttacker;
+        CBasePlayer* pAttackPlayer = (CBasePlayer*)pAttacker;
         if (pAttackPlayer->m_fSuper) {
 			if (pAttackPlayer->m_iSuperType == QUAD_DAMAGE) {
 				flDamage *= 4;
