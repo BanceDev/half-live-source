@@ -361,6 +361,7 @@ void CHud::Init()
 	m_Geiger.Init();
 	m_Train.Init();
 	m_Battery.Init();
+	m_Timer.Init();
 	m_Flash.Init();
 	m_Message.Init();
 	m_StatusBar.Init();
@@ -505,6 +506,7 @@ void CHud::VidInit()
 	m_Geiger.VidInit();
 	m_Train.VidInit();
 	m_Battery.VidInit();
+	m_Timer.VidInit();
 	m_Flash.VidInit();
 	m_Message.VidInit();
 	m_StatusBar.VidInit();

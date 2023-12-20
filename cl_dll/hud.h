@@ -339,6 +339,21 @@ private:
 	int m_iHeight; // width of the battery innards
 };
 
+// Countdown Timer
+//-----------------------------------------------------
+//
+class CHudTimer : public CHudBase
+{
+public:
+	bool Init() override;
+	bool VidInit() override;
+	bool Draw(float flTime) override;
+	bool MsgFunc_Timer(const char* pszName, int iSize, void* pbuf);
+
+private:
+	int m_iCurrentTime;
+};
+
 
 //
 //-----------------------------------------------------
@@ -561,6 +576,7 @@ public:
 	CHudSpectator m_Spectator;
 	CHudGeiger m_Geiger;
 	CHudBattery m_Battery;
+	CHudTimer m_Timer;
 	CHudTrain m_Train;
 	CHudFlashlight m_Flash;
 	CHudMessage m_Message;

@@ -4288,8 +4288,14 @@ void CBasePlayer::UpdateClientData()
 		MESSAGE_END();
 	}
 
+	// update the timer
+	MESSAGE_BEGIN(MSG_ONE, gmsgTimer, NULL, pev);
+	WRITE_SHORT((int)(timeleft.value));
+	MESSAGE_END();
+
 	//Handled anything that needs resetting
 	m_bRestored = false;
+	
 }
 
 
