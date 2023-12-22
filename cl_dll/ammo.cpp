@@ -431,7 +431,8 @@ void WeaponsResource::SelectSlot(int iSlot, bool fAdvance, int iDirection)
 		return;
 
 	WEAPON* p = NULL;
-	bool fastSwitch = CVAR_GET_FLOAT("hud_fastswitch") != 0;
+	// using old functionality in case some form of default weapon switching will be reimplemented
+	bool fastSwitch = true; 
 
 	if (fastSwitch)
 	{
@@ -756,32 +757,33 @@ void CHudAmmo::UserCmd_NextWeapon()
 	if (gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) != 0)
 		return;
 
-	if (!gpActiveSel || gpActiveSel == (WEAPON*)1)
-		gpActiveSel = m_pWeapon;
-
 	int pos = 0;
 	int slot = 0;
-	if (gpActiveSel)
+	if (m_pWeapon)
 	{
-		pos = gpActiveSel->iSlotPos + 1;
-		slot = gpActiveSel->iSlot;
+		pos = m_pWeapon->iSlotPos - 1;
+		slot = m_pWeapon->iSlot;
 	}
 
 	for (int loop = 0; loop <= 1; loop++)
 	{
 		for (; slot < MAX_WEAPON_SLOTS; slot++)
 		{
-			for (; pos < MAX_WEAPON_POSITIONS; pos++)
+			for (; pos >= 0; pos--)
 			{
 				WEAPON* wsp = gWR.GetWeaponSlot(slot, pos);
 
 				if (wsp && gWR.HasAmmo(wsp))
 				{
-					gpActiveSel = wsp;
+					// Found a weapon, store and switch
+					PlaySound("wpn_select.wav", 1);
+					gpLastSel = wsp;
+					ServerCmd( wsp->szName );
+					g_weaponselect = wsp->iId;
+
 					return;
 				}
 			}
-
 			pos = 0;
 		}
 
@@ -797,15 +799,12 @@ void CHudAmmo::UserCmd_PrevWeapon()
 	if (gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) != 0)
 		return;
 
-	if (!gpActiveSel || gpActiveSel == (WEAPON*)1)
-		gpActiveSel = m_pWeapon;
-
 	int pos = MAX_WEAPON_POSITIONS - 1;
 	int slot = MAX_WEAPON_SLOTS - 1;
-	if (gpActiveSel)
+	if (m_pWeapon)
 	{
-		pos = gpActiveSel->iSlotPos - 1;
-		slot = gpActiveSel->iSlot;
+		pos = m_pWeapon->iSlotPos - 1;
+		slot = m_pWeapon->iSlot;
 	}
 
 	for (int loop = 0; loop <= 1; loop++)
@@ -818,7 +817,12 @@ void CHudAmmo::UserCmd_PrevWeapon()
 
 				if (wsp && gWR.HasAmmo(wsp))
 				{
-					gpActiveSel = wsp;
+					// Found a weapon, store and switch
+					PlaySound("wpn_select.wav", 1);
+					gpLastSel = wsp;
+					ServerCmd( wsp->szName );
+					g_weaponselect = wsp->iId;
+
 					return;
 				}
 			}

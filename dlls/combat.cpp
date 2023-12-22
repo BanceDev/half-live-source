@@ -891,7 +891,8 @@ bool CBaseMonster::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, f
 		
 		CBaseEntity* pAttacker = CBaseEntity::Instance(pevAttacker);
 		if (pAttacker == this) {
-			if (flDamage > 5) {
+			// very jank solution def should find a better way
+			if (flDamage > 1) {
 				pev->velocity = pev->velocity + vecDir * -DamageForce(80);
 			} else {
 				pev->velocity = pev->velocity + vecDir * -DamageForce(15);
