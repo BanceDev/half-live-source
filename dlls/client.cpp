@@ -933,6 +933,9 @@ void ClientPrecache()
 	PRECACHE_SOUND("player/pl_step3.wav");
 	PRECACHE_SOUND("player/pl_step4.wav");
 
+	//jump
+	PRECACHE_SOUND("player/plyrjmp8.wav");
+
 	PRECACHE_SOUND("common/npc_step1.wav"); // NPC walk on concrete
 	PRECACHE_SOUND("common/npc_step2.wav");
 	PRECACHE_SOUND("common/npc_step3.wav");
