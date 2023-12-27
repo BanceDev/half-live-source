@@ -1119,13 +1119,13 @@ void RadiusDamage(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker
 
 void CBaseMonster::RadiusDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
 {
-	::RadiusDamage(pev->origin, pevInflictor, pevAttacker, flDamage, flDamage * 1.5, iClassIgnore, bitsDamageType);
+	::RadiusDamage(pev->origin, pevInflictor, pevAttacker, flDamage, flDamage * 2.0, iClassIgnore, bitsDamageType);
 }
 
 
 void CBaseMonster::RadiusDamage(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
 {
-	::RadiusDamage(vecSrc, pevInflictor, pevAttacker, flDamage, flDamage * 1.5, iClassIgnore, bitsDamageType);
+	::RadiusDamage(vecSrc, pevInflictor, pevAttacker, flDamage, flDamage * 2.0, iClassIgnore, bitsDamageType);
 }
 
 
