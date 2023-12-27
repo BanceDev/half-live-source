@@ -317,13 +317,13 @@ void CGrenade::BounceSound()
 	switch (RANDOM_LONG(0, 2))
 	{
 	case 0:
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/grenade_hit1.wav", 0.25, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/bounce.wav", 1.0, ATTN_NORM);
 		break;
 	case 1:
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/grenade_hit2.wav", 0.25, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/bounce.wav", 1.0, ATTN_NORM);
 		break;
 	case 2:
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/grenade_hit3.wav", 0.25, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/bounce.wav", 1.0, ATTN_NORM);
 		break;
 	}
 }
@@ -445,13 +445,13 @@ CGrenade* CGrenade::ShootTimed(entvars_t* pevOwner, Vector vecStart, Vector vecV
 		pGrenade->pev->velocity = Vector(0, 0, 0);
 	}
 
-	SET_MODEL(ENT(pGrenade->pev), "models/w_grenade.mdl");
+	SET_MODEL(ENT(pGrenade->pev), "models/grenade.mdl");
 	pGrenade->pev->sequence = RANDOM_LONG(3, 6);
 	pGrenade->pev->framerate = 1.0;
 	pGrenade->ResetSequenceInfo();
 
-	// Tumble through the air
-	// pGrenade->pev->avelocity.x = -400;
+	// Tumble in air
+	pGrenade->pev->avelocity.x = RANDOM_FLOAT(-100, -500);
 
 	pGrenade->pev->gravity = 0.5;
 	pGrenade->pev->friction = 0.8;

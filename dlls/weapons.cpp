@@ -299,6 +299,9 @@ void W_Precache()
 	UTIL_PrecacheOtherWeapon("weapon_gauss");
 	UTIL_PrecacheOther("ammo_gaussclip");
 
+	// grenade launcher
+	UTIL_PrecacheOtherWeapon("weapon_grenade_launcher");
+
 	// rpg
 	UTIL_PrecacheOtherWeapon("weapon_rpg");
 	UTIL_PrecacheOther("ammo_rpgclip");
@@ -349,9 +352,7 @@ void W_Precache()
 	PRECACHE_SOUND("weapons/debris2.wav"); // explosion aftermaths
 	PRECACHE_SOUND("weapons/debris3.wav"); // explosion aftermaths
 
-	PRECACHE_SOUND("weapons/grenade_hit1.wav"); //grenade
-	PRECACHE_SOUND("weapons/grenade_hit2.wav"); //grenade
-	PRECACHE_SOUND("weapons/grenade_hit3.wav"); //grenade
+	PRECACHE_SOUND("weapons/bounce.wav"); //grenade
 
 	PRECACHE_SOUND("weapons/bullet_hit1.wav"); // hit by bullet
 	PRECACHE_SOUND("weapons/bullet_hit2.wav"); // hit by bullet

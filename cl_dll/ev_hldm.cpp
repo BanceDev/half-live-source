@@ -1570,6 +1570,32 @@ void EV_SnarkFire(event_args_t* args)
 //	   SQUEAK END
 //======================
 
+//======================
+//	 GLAUNCHER START
+//======================
+void EV_FireGLauncher(event_args_t* args)
+{
+	int idx;
+	Vector origin;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/rocketfire1.wav", 0.9, ATTN_NORM, 0, PITCH_NORM);
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_ITEM, "weapons/glauncher.wav", 0.7, ATTN_NORM, 0, PITCH_NORM);
+
+	//Only play the weapon anims if I shot it.
+	if (EV_IsLocal(idx))
+	{
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(GLAUNCHER_FIRE1, 0);
+
+		V_PunchAxis(0, -5.0);
+	}
+}
+//======================
+//	  GLAUNCHER END
+//======================
+
 void EV_TrainPitchAdjust(event_args_t* args)
 {
 	int idx;

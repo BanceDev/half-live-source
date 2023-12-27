@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\dlls\rpg.cpp">
       <Filter>Source Files\_hl\dlls</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\glauncher.cpp">
+      <Filter>Source Files\_hl\dlls</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\dlls\satchel.cpp">
       <Filter>Source Files\_hl\dlls</Filter>
     </ClCompile>

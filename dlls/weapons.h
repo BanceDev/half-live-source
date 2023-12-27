@@ -78,6 +78,7 @@ public:
 #define MP5_WEIGHT 15
 #define SHOTGUN_WEIGHT 15
 #define CROSSBOW_WEIGHT 10
+#define GLAUNCHER_WEIGHT 15
 #define RPG_WEIGHT 20
 #define GAUSS_WEIGHT 20
 #define EGON_WEIGHT 20
@@ -120,6 +121,7 @@ public:
 #define SATCHEL_MAX_CLIP WEAPON_NOCLIP
 #define TRIPMINE_MAX_CLIP WEAPON_NOCLIP
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
+#define GLAUNCHER_MAX_CLIP 10
 
 
 // the default amount of ammo that comes with each gun when it spawns
@@ -138,6 +140,7 @@ public:
 #define TRIPMINE_DEFAULT_GIVE 1
 #define SNARK_DEFAULT_GIVE 5
 #define HIVEHAND_DEFAULT_GIVE 8
+#define GLAUNCHER_DEFAULT_GIVE 15
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE 20
@@ -1220,4 +1223,56 @@ public:
 
 private:
 	unsigned short m_usSnarkFire;
+};
+
+enum glauncher_e
+{
+	GLAUNCHER_IDLE = 0,
+	GLAUNCHER_FIDGET,
+	GLAUNCHER_FIRE1,	   // to reload
+	GLAUNCHER_FIRE2,	   // to empty
+	GLAUNCHER_RELOAD1,  // loaded
+	GLAUNCHER_RELOAD2,	   // loaded
+	GLAUNCHER_RELOAD3,  // unloaded
+	GLAUNCHER_RELOAD4,   // unloaded
+	GLAUNCHER_DRAW1,   // unloaded idle
+	GLAUNCHER_DRAW2, // unloaded fidget
+	GLAUNCHER_HOLSTER1,
+	GLAUNCHER_HOLSTER2
+};
+
+class CGLauncher : public CBasePlayerWeapon
+{
+public:
+#ifndef CLIENT_DLL
+	static TYPEDESCRIPTION m_SaveData[];
+#endif
+
+	void Spawn() override;
+	void Precache() override;
+	void Reload() override;
+	int iItemSlot() override { return 6; }
+	bool GetItemInfo(ItemInfo* p) override;
+
+	bool Deploy() override;
+	void Holster() override;
+
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	void WeaponIdle() override;
+	bool ShouldWeaponIdle() override { return true; }
+
+	int m_cActiveRockets; // how many missiles in flight from this launcher right now?
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usGLauncher;
 };

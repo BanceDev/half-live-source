@@ -270,7 +270,7 @@ void CRpgRocket::FollowThink()
 
 void CRpg::Reload()
 {
-	if (m_iClip == 1)
+	if (m_iClip > 0)
 	{
 		// don't bother with any of this if don't need to reload.
 		return;
@@ -323,19 +323,7 @@ void CRpg::Spawn()
 	SET_MODEL(ENT(pev), "models/w_rpg.mdl");
 	m_fSpotActive = true;
 
-#ifdef CLIENT_DLL
-	if (bIsMultiplayer())
-#else
-	if (g_pGameRules->IsMultiplayer())
-#endif
-	{
-		// more default ammo in multiplay.
-		m_iDefaultAmmo = RPG_DEFAULT_GIVE * 2;
-	}
-	else
-	{
-		m_iDefaultAmmo = RPG_DEFAULT_GIVE;
-	}
+	m_iDefaultAmmo = RPG_DEFAULT_GIVE;
 
 	Materialize();
 	//FallInit(); // get ready to fall down.
@@ -368,7 +356,7 @@ bool CRpg::GetItemInfo(ItemInfo* p)
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = RPG_MAX_CLIP;
-	p->iSlot = 5;
+	p->iSlot = 6;
 	p->iPosition = 0;
 	p->iId = m_iId = WEAPON_RPG;
 	p->iFlags = 0;
