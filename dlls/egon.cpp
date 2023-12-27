@@ -365,11 +365,6 @@ void CEgon::UpdateEffect(const Vector& startPoint, const Vector& endPoint, float
 	m_pBeam->SetBrightness(255 - (timeBlend * 180));
 	m_pBeam->SetWidth(40 - (timeBlend * 20));
 
-	if (m_fireMode == FIRE_WIDE)
-		m_pBeam->SetColor(30 + (25 * timeBlend), 30 + (30 * timeBlend), 64 + 80 * fabs(sin(gpGlobals->time * 10)));
-	else
-		m_pBeam->SetColor(60 + (25 * timeBlend), 120 + (30 * timeBlend), 64 + 80 * fabs(sin(gpGlobals->time * 10)));
-
 
 	UTIL_SetOrigin(m_pSprite->pev, endPoint);
 	m_pSprite->pev->frame += 8 * gpGlobals->frametime;
@@ -415,14 +410,14 @@ void CEgon::CreateEffect()
 	{
 		m_pBeam->SetScrollRate(50);
 		m_pBeam->SetNoise(20);
-		m_pNoise->SetColor(50, 50, 255);
+		m_pNoise->SetColor(135, 206, 235);
 		m_pNoise->SetNoise(8);
 	}
 	else
 	{
 		m_pBeam->SetScrollRate(110);
 		m_pBeam->SetNoise(5);
-		m_pNoise->SetColor(80, 120, 255);
+		m_pNoise->SetColor(135, 206, 235);
 		m_pNoise->SetNoise(2);
 	}
 #endif

@@ -1821,6 +1821,10 @@ void CTriggerPush::Touch(CBaseEntity* pOther)
 {
 	entvars_t* pevToucher = pOther->pev;
 
+	// Only teleport monsters or clients
+	if (!FBitSet(pevToucher->flags, FL_CLIENT | FL_MONSTER))
+		return;
+
 	// UNDONE: Is there a better way than health to detect things that have physics? (clients/monsters)
 	switch (pevToucher->movetype)
 	{
