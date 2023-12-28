@@ -1263,6 +1263,7 @@ public:
 	bool ShouldWeaponIdle() override { return true; }
 
 	int m_cActiveRockets; // how many missiles in flight from this launcher right now?
+	float m_flNextReload;
 
 	bool UseDecrement() override
 	{

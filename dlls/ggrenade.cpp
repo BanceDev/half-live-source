@@ -231,6 +231,19 @@ void CGrenade::BounceTouch(CBaseEntity* pOther)
 	if (pOther->edict() == pev->owner)
 		return;
 
+	// explode if we hit a player
+	if (pOther && pOther->Classify() == CLASS_PLAYER) {
+		TraceResult tr;
+		Vector vecSpot; // trace starts here!
+
+		pev->enemy = pOther->edict();
+
+		vecSpot = pev->origin - pev->velocity.Normalize() * 32;
+		UTIL_TraceLine(vecSpot, vecSpot + pev->velocity.Normalize() * 64, ignore_monsters, ENT(pev), &tr);
+
+		Explode(&tr, DMG_BLAST);
+	}
+
 	// only do damage if we're moving fairly fast
 	if (m_flNextAttack < gpGlobals->time && pev->velocity.Length() > 100)
 	{
