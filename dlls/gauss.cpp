@@ -332,7 +332,7 @@ void CGauss::StartFire()
 #endif
 		// player "shoot" animation
 		m_pPlayer->SetAnimation(PLAYER_ATTACK1);
-		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(1.2);
+		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(1.1);
 	}
 
 	// time until aftershock 'static discharge' sound

@@ -121,7 +121,7 @@ public:
 #define SATCHEL_MAX_CLIP WEAPON_NOCLIP
 #define TRIPMINE_MAX_CLIP WEAPON_NOCLIP
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
-#define GLAUNCHER_MAX_CLIP 10
+#define GLAUNCHER_MAX_CLIP 5
 
 
 // the default amount of ammo that comes with each gun when it spawns
