@@ -354,6 +354,23 @@ private:
 	int m_iCurrentTime;
 };
 
+// Damage Numbers
+//-----------------------------------------------------
+//
+class CHudDamageNums : public CHudBase
+{
+public:
+	bool Init() override;
+	bool VidInit() override;
+	bool Draw(float flTime) override;
+	bool MsgFunc_DamageNums(const char* pszName, int iSize, void* pbuf);
+
+private:
+	int m_iDamageAmt;
+	Vector m_TargetOrigin;
+	float m_fFade;
+};
+
 
 //
 //-----------------------------------------------------
@@ -577,6 +594,7 @@ public:
 	CHudGeiger m_Geiger;
 	CHudBattery m_Battery;
 	CHudTimer m_Timer;
+	CHudDamageNums m_DamageNums;
 	CHudTrain m_Train;
 	CHudFlashlight m_Flash;
 	CHudMessage m_Message;

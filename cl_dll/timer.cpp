@@ -22,10 +22,8 @@
 #include "cl_util.h"
 #include "parsemsg.h"
 
-#include <string.h>
-#include <stdio.h>
 
-DECLARE_MESSAGE(m_Timer, Timer)
+DECLARE_MESSAGE(m_Timer, Timer);
 
 bool CHudTimer::Init()
 {

@@ -448,6 +448,16 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 	WRITE_LONG(5);							  // eventflags (priority and flags)
 	MESSAGE_END();
 
+	if (pAttacker != this) {
+		// update the damage hud
+		MESSAGE_BEGIN(MSG_ONE, gmsgDamageNums, NULL, pevAttacker);
+		WRITE_SHORT((int)flDamage);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z);
+		MESSAGE_END();
+	}	
+
 
 	// how bad is it, doc?
 
