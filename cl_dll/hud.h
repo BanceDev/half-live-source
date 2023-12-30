@@ -29,6 +29,7 @@
 #include "common_types.h"
 #include "cl_dll.h"
 #include "ammo.h"
+#include <queue>
 
 #define DHN_DRAWZERO 1
 #define DHN_2DIGITS 2
@@ -354,9 +355,18 @@ private:
 	int m_iCurrentTime;
 };
 
+
 // Damage Numbers
 //-----------------------------------------------------
 //
+
+struct DamageInfo {
+	int damageAmt;
+	Vector targetPos;
+	float fade;
+};
+
+
 class CHudDamageNums : public CHudBase
 {
 public:
@@ -366,9 +376,8 @@ public:
 	bool MsgFunc_DamageNums(const char* pszName, int iSize, void* pbuf);
 
 private:
-	int m_iDamageAmt;
-	Vector m_TargetOrigin;
-	float m_fFade;
+	DamageInfo m_DamageInfo;
+	std::queue<DamageInfo> m_DamageQueue;
 };
 
 

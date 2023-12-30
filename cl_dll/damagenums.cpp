@@ -23,13 +23,17 @@
 #include "parsemsg.h"
 #include "triangleapi.h"
 
+#include <queue>
 
 DECLARE_MESSAGE(m_DamageNums, DamageNums);
 
 bool CHudDamageNums::Init()
 {
-	m_iDamageAmt = 0;
-    m_fFade = 0;
+	m_DamageInfo.damageAmt = 0;
+	m_DamageInfo.fade = 0;
+	m_DamageInfo.targetPos.x = 0;
+	m_DamageInfo.targetPos.y = 0;
+	m_DamageInfo.targetPos.z = 0;
 	m_iFlags = 0;
 
 	HOOK_MESSAGE(DamageNums);
@@ -51,15 +55,17 @@ bool CHudDamageNums::MsgFunc_DamageNums(const char* pszName, int iSize, void* pb
 
 	BEGIN_READ(pbuf, iSize);
 	int d = READ_SHORT();
-    int x = READ_COORD();
-    int y = READ_COORD();
-    int z = READ_COORD();
+    float x = READ_COORD();
+    float y = READ_COORD();
+    float z = READ_COORD();
 
-	m_iDamageAmt = d;
-    m_TargetOrigin.x = x;
-    m_TargetOrigin.y = y;
-    m_TargetOrigin.z = z;
-    m_fFade = 20;
+	m_DamageInfo.damageAmt = d;
+	m_DamageInfo.targetPos.x = x;
+	m_DamageInfo.targetPos.y = y;
+	m_DamageInfo.targetPos.z = z;
+	m_DamageInfo.fade = 20;
+
+	m_DamageQueue.push(m_DamageInfo);
 
 	return true;
 }
@@ -67,40 +73,47 @@ bool CHudDamageNums::MsgFunc_DamageNums(const char* pszName, int iSize, void* pb
 
 bool CHudDamageNums::Draw(float flTime)
 {
-	int r, g, b, a, x, y;
+	int i;
+	for (i = 0; i < m_DamageQueue.size(); i++) {
+		int r, g, b, a, x, y;
 
-	UnpackRGB(r, g, b, RGB_YELLOWISH);
+		UnpackRGB(r, g, b, RGB_YELLOWISH);
 
-    if (0 != m_fFade)
-	{
-		if (m_fFade > 20)
-			m_fFade = 20;
-
-		m_fFade -= (gHUD.m_flTimeDelta * 20);
-		if (m_fFade <= 0)
+		if (0 != m_DamageQueue.front().fade)
 		{
-			a = 255;
-			m_fFade = 0;
+			if (m_DamageQueue.front().fade > 20)
+				m_DamageQueue.front().fade = 20;
+
+			m_DamageQueue.front().fade -= (gHUD.m_flTimeDelta * 20);
+			if (m_DamageQueue.front().fade <= 0)
+			{
+				a = 255;
+				m_DamageQueue.front().fade = 0;
+			}
+
+			// Fade the health number back to dim
+
+			a = (m_DamageQueue.front().fade / 20) * 255;
 		}
+		else
+			a = 0;
 
-		// Fade the health number back to dim
+		ScaleColors(r, g, b, a);
 
-		a = (m_fFade / 20) * 255;
+		Vector screen;
+		gEngfuncs.pTriAPI->WorldToScreen(m_DamageQueue.front().targetPos, screen);
+		y = (1.0f - screen.y) * ScreenHeight * 0.5f - (m_DamageQueue.front().fade);
+		x = (1.0f + screen.x) * ScreenWidth * 0.5f;
+		gHUD.DrawHudNumber(x, y, DHN_DRAWZERO, m_DamageQueue.front().damageAmt, r, g, b);
+
+		//reorder the queue
+		DamageInfo temp = m_DamageQueue.front();
+		m_DamageQueue.pop();
+		if(temp.fade > 0) {
+			m_DamageQueue.push(temp);
+		}
 	}
-	else
-		a = 0;
-
-	ScaleColors(r, g, b, a);
-
-    Vector screen;
-	gEngfuncs.pTriAPI->WorldToScreen(m_TargetOrigin, screen);
-	//screen.x = (1.0f + screen.x) * ScreenHeight * 0.5f;
-	//screen.y = (1.0f - screen.y) * ScreenWidth * 0.5f;
-
-	y = screen.y;
-	x = screen.x;
-
-    gHUD.DrawHudNumber(x, y, DHN_DRAWZERO, m_iDamageAmt, r, g, b);
+	
 
 	return true;
 }
