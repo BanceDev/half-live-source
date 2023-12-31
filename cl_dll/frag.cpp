@@ -51,7 +51,7 @@ bool CHudFrag::MsgFunc_Frag(const char* pszName, int iSize, void* pbuf)
 	int victim = READ_BYTE();
 
 	m_chPlayerName = g_PlayerInfoList[victim].name;
-    m_fFade = 50;
+    m_fFade = 100;
 
 	return true;
 }
@@ -67,17 +67,17 @@ bool CHudFrag::Draw(float flTime)
 
     if (0 != m_fFade)
     {
-        if (m_fFade > 50)
-            m_fFade = 50;
+        if (m_fFade > 100)
+            m_fFade = 100;
 
-        m_fFade -= (gHUD.m_flTimeDelta * 50);
+        m_fFade -= (gHUD.m_flTimeDelta * 100);
         if (m_fFade <= 0)
         {
             a = 255;
             m_fFade = 0;
         }
 
-        a = (m_fFade / 50) * 255;
+        a = (m_fFade / 100) * 255;
     }
     else
         a = 0;

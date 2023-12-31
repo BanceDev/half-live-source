@@ -389,6 +389,16 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 		}
     }
 
+	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
+		// update the damage hud
+		MESSAGE_BEGIN(MSG_ONE, gmsgDamageNums, NULL, pevAttacker);
+		WRITE_SHORT((int)flDamage);
+		WRITE_COORD(Center().x);
+		WRITE_COORD(Center().y);
+		WRITE_COORD(Center().z);
+		MESSAGE_END();
+	}
+
 	// if this player has the protection
 	if (m_fSuper && m_iSuperType == PROTECTION) {
 		flDamage /= 4;
@@ -448,15 +458,7 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 	WRITE_LONG(5);							  // eventflags (priority and flags)
 	MESSAGE_END();
 
-	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
-		// update the damage hud
-		MESSAGE_BEGIN(MSG_ONE, gmsgDamageNums, NULL, pevAttacker);
-		WRITE_SHORT((int)flDamage);
-		WRITE_COORD(Center().x);
-		WRITE_COORD(Center().y);
-		WRITE_COORD(Center().z);
-		MESSAGE_END();
-	}
+
 
 	// how bad is it, doc?
 

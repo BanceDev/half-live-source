@@ -645,9 +645,12 @@ void CHalfLifeMultiplay::DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, e
 	MESSAGE_END();
 
 	// tell the attacker they got a frag
-	MESSAGE_BEGIN(MSG_ONE, gmsgFrag, NULL, pKiller);
-	WRITE_SHORT(ENTINDEX(pVictim->edict()));
-	MESSAGE_END();
+	if ((CBasePlayer*)Killer != pVictim) {
+		MESSAGE_BEGIN(MSG_ONE, gmsgFrag, NULL, pKiller);
+		WRITE_SHORT(ENTINDEX(pVictim->edict()));
+		MESSAGE_END();
+	}	
+	
 
 	// replace the code names with the 'real' names
 	if (0 == strcmp(killer_weapon_name, "egon"))
