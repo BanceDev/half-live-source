@@ -381,6 +381,21 @@ private:
 };
 
 
+// Frag Message
+//-----------------------------------------------------
+//
+class CHudFrag : public CHudBase
+{
+public:
+	bool Init() override;
+	bool VidInit() override;
+	bool Draw(float flTime) override;
+	bool MsgFunc_Frag(const char* pszName, int iSize, void* pbuf);
+
+private:
+	char* m_chPlayerName;
+};
+
 //
 //-----------------------------------------------------
 //
@@ -603,6 +618,7 @@ public:
 	CHudGeiger m_Geiger;
 	CHudBattery m_Battery;
 	CHudTimer m_Timer;
+	CHudFrag m_Frag;
 	CHudDamageNums m_DamageNums;
 	CHudTrain m_Train;
 	CHudFlashlight m_Flash;

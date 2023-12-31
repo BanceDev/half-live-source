@@ -362,6 +362,7 @@ void CHud::Init()
 	m_Train.Init();
 	m_Battery.Init();
 	m_Timer.Init();
+	m_Frag.Init();
 	m_DamageNums.Init();
 	m_Flash.Init();
 	m_Message.Init();
@@ -508,6 +509,7 @@ void CHud::VidInit()
 	m_Train.VidInit();
 	m_Battery.VidInit();
 	m_Timer.VidInit();
+	m_Frag.VidInit();
 	m_DamageNums.VidInit();
 	m_Flash.VidInit();
 	m_Message.VidInit();

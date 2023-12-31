@@ -77,7 +77,7 @@ bool CHudDamageNums::Draw(float flTime)
 	for (i = 0; i < m_DamageQueue.size(); i++) {
 		int r, g, b, a, x, y;
 
-		UnpackRGB(r, g, b, RGB_YELLOWISH);
+		UnpackRGB(r, g, b, RGB_REDISH);
 
 		if (0 != m_DamageQueue.front().fade)
 		{

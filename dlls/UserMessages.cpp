@@ -34,7 +34,8 @@ void LinkUserMessages()
 	gmsgHealth = REG_USER_MSG("Health", 4);
 	gmsgDamage = REG_USER_MSG("Damage", 12);
 	gmsgBattery = REG_USER_MSG("Battery", 2);
-	gmsgTimer = REG_USER_MSG("Timer", 2);
+	gmsgTimer = REG_USER_MSG("Timer", -1);
+	gmsgFrag = REG_USER_MSG("Frag", 2);
 	gmsgDamageNums = REG_USER_MSG("DamageNums", 8);
 	gmsgTrain = REG_USER_MSG("Train", 1);
 	//gmsgHudText = REG_USER_MSG( "HudTextPro", -1 );
