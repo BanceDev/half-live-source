@@ -143,8 +143,8 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgRPG = 90;
 
 	// Egon
-	gSkillData.plrDmgEgonWide = 9;
-	gSkillData.plrDmgEgonNarrow = 6;
+	gSkillData.plrDmgEgonWide = 10;
+	gSkillData.plrDmgEgonNarrow = 7;
 
 	// Hand Grendade
 	gSkillData.plrDmgHandGrenade = 80;
@@ -645,11 +645,13 @@ void CHalfLifeMultiplay::DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, e
 	MESSAGE_END();
 
 	// tell the attacker they got a frag
-	if ((CBasePlayer*)Killer != pVictim) {
-		MESSAGE_BEGIN(MSG_ONE, gmsgFrag, NULL, pKiller);
-		WRITE_SHORT(ENTINDEX(pVictim->edict()));
-		MESSAGE_END();
-	}	
+	if (Killer && Killer->Classify() == CLASS_PLAYER) {
+		if ((CBasePlayer*)Killer != pVictim) {
+			MESSAGE_BEGIN(MSG_ONE, gmsgFrag, NULL, pKiller);
+			WRITE_SHORT(ENTINDEX(pVictim->edict()));
+			MESSAGE_END();
+		}
+	}
 	
 
 	// replace the code names with the 'real' names
