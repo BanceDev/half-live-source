@@ -448,14 +448,15 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 	WRITE_LONG(5);							  // eventflags (priority and flags)
 	MESSAGE_END();
 
-	// update the damage hud
-	MESSAGE_BEGIN(MSG_ONE, gmsgDamageNums, NULL, pevAttacker);
-	WRITE_SHORT((int)flDamage);
-	WRITE_COORD(Center().x);
-	WRITE_COORD(Center().y);
-	WRITE_COORD(Center().z);
-	MESSAGE_END();
-
+	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
+		// update the damage hud
+		MESSAGE_BEGIN(MSG_ONE, gmsgDamageNums, NULL, pevAttacker);
+		WRITE_SHORT((int)flDamage);
+		WRITE_COORD(Center().x);
+		WRITE_COORD(Center().y);
+		WRITE_COORD(Center().z);
+		MESSAGE_END();
+	}
 
 	// how bad is it, doc?
 
@@ -850,11 +851,6 @@ void CBasePlayer::Killed(entvars_t* pevAttacker, int iGib)
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgSetFOV, NULL, pev);
 	WRITE_BYTE(0);
-	MESSAGE_END();
-
-	// tell the attacker they got a frag
-	MESSAGE_BEGIN(MSG_ONE, gmsgFrag, NULL, pevAttacker);
-	WRITE_STRING(STRING(pev->netname));
 	MESSAGE_END();
 
 	// UNDONE: Put this in, but add FFADE_PERMANENT and make fade time 8.8 instead of 4.12

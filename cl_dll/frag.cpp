@@ -28,6 +28,7 @@ DECLARE_MESSAGE(m_Frag, Frag);
 bool CHudFrag::Init()
 {
 	m_iFlags = 0;
+    m_fFade = 0;
 
 	HOOK_MESSAGE(Frag);
 
@@ -47,9 +48,10 @@ bool CHudFrag::MsgFunc_Frag(const char* pszName, int iSize, void* pbuf)
 	m_iFlags |= HUD_ACTIVE;
 
 	BEGIN_READ(pbuf, iSize);
-	char* str = READ_STRING();
+	int victim = READ_BYTE();
 
-	m_chPlayerName = str;
+	m_chPlayerName = g_PlayerInfoList[victim].name;
+    m_fFade = 50;
 
 	return true;
 }
@@ -57,16 +59,35 @@ bool CHudFrag::MsgFunc_Frag(const char* pszName, int iSize, void* pbuf)
 
 bool CHudFrag::Draw(float flTime)
 {
-	int r, g, b, x, y;
+	int r, g, b, a, x, y;
 
 	r = 128;
     g = 128;
     b = 128;
 
-	y = (ScreenHeight / 2) - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
-	x = ScreenWidth / 2;
+    if (0 != m_fFade)
+    {
+        if (m_fFade > 50)
+            m_fFade = 50;
+
+        m_fFade -= (gHUD.m_flTimeDelta * 50);
+        if (m_fFade <= 0)
+        {
+            a = 255;
+            m_fFade = 0;
+        }
+
+        a = (m_fFade / 50) * 255;
+    }
+    else
+        a = 0;
+
+    ScaleColors(r, g, b, a);
+
     char fragMessage[256];
     sprintf(fragMessage, "You Fragged %s", m_chPlayerName);
+	y = (ScreenHeight / 2) - gHUD.m_iFontHeight * 5;
+	x = ScreenWidth / 2 - (5.5f * strlen(fragMessage))/2;
 
     gHUD.DrawHudString(x + 2, y-5, x*2, fragMessage, r, g, b);
 

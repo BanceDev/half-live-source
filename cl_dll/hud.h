@@ -394,6 +394,7 @@ public:
 
 private:
 	char* m_chPlayerName;
+	float m_fFade;
 };
 
 //
