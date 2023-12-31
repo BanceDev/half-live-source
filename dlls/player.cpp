@@ -389,6 +389,10 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 		}
     }
 
+	if (flDamage < 1) {
+		flDamage = 1;
+	}
+
 	if (pAttacker && pAttacker->Classify() == CLASS_PLAYER) {
 		// update the damage hud
 		MESSAGE_BEGIN(MSG_ONE, gmsgDamageNums, NULL, pevAttacker);
