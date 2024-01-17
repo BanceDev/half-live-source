@@ -270,7 +270,7 @@ void CRpgRocket::FollowThink()
 
 void CRpg::Reload()
 {
-	if (m_iClip > 0)
+	if (m_iClip == 10)
 	{
 		// don't bother with any of this if don't need to reload.
 		return;
@@ -291,28 +291,10 @@ void CRpg::Reload()
 
 	m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
 
-	if (0 != m_cActiveRockets && m_fSpotActive)
-	{
-		// no reloading when there are active missiles tracking the designator.
-		// ward off future autoreload attempts by setting next attack time into the future for a bit.
-		return;
-	}
+	const bool iResult = DefaultReload(10, RPG_RELOAD, 2);
 
-#ifndef CLIENT_DLL
-	if (m_pSpot && m_fSpotActive)
-	{
-		m_pSpot->Suspend(2.1);
-		m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 2.1;
-	}
-#endif
-
-	if (m_iClip == 0)
-	{
-		const bool iResult = DefaultReload(RPG_MAX_CLIP, RPG_RELOAD, 2);
-
-		if (iResult)
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
-	}
+	if (iResult)
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
 }
 
 void CRpg::Spawn()

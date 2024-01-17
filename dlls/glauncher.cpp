@@ -128,109 +128,46 @@ void CGLauncher::Holster()
 
 void CGLauncher::Reload()
 {
-	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0 || m_iClip == GLAUNCHER_MAX_CLIP)
-		return;
-
-	// don't reload until recoil is done
-	if (m_flNextPrimaryAttack > UTIL_WeaponTimeBase())
-		return;
-
-	// check to see if we're ready to reload
-	if (m_fInSpecialReload == 0)
+	if (m_iClip > 0)
 	{
-		SendWeaponAnim(GLAUNCHER_IDLE);
-		m_fInSpecialReload = 1;
-		m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.0;
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.0;
-		m_flNextPrimaryAttack = GetNextAttackDelay(0.0);
-		m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.0;
+		// don't bother with any of this if don't need to reload.
 		return;
 	}
-	else if (m_fInSpecialReload == 1)
+
+	if (m_pPlayer->ammo_rockets <= 0)
+		return;
+
+	// because the RPG waits to autoreload when no missiles are active while  the LTD is on, the
+	// weapons code is constantly calling into this function, but is often denied because
+	// a) missiles are in flight, but the LTD is on
+	// or
+	// b) player is totally out of ammo and has nothing to switch to, and should be allowed to
+	//    shine the designator around
+	//
+	// Set the next attack time into the future so that WeaponIdle will get called more often
+	// than reload, allowing the RPG LTD to be updated
+
+	m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
+
+	if (m_iClip == 0)
 	{
-		if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
-			return;
-		// was waiting for gun to move to side
-		m_fInSpecialReload = 2;
+		const bool iResult = DefaultReload(RPG_MAX_CLIP, GLAUNCHER_RELOAD1, 2);
 
-		if (RANDOM_LONG(0, 1))
-			EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/reload1.wav", 1, ATTN_NORM, 0, 85 + RANDOM_LONG(0, 0x1f));
-		else
-			EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/reload3.wav", 1, ATTN_NORM, 0, 85 + RANDOM_LONG(0, 0x1f));
-
-		SendWeaponAnim(GLAUNCHER_RELOAD1);
-
-		m_flNextReload = UTIL_WeaponTimeBase() + 0.6;
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.6;
-	}
-	else
-	{
-		// Add them to the clip
-		m_iClip += 1;
-		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= 1;
-		m_fInSpecialReload = 1;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase();
 	}
 }
 
 void CGLauncher::WeaponIdle()
 {
-    ResetEmptySound();
-
-	m_pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
-
-	//Moved to ItemPostFrame
-	/*
-	if ( m_flPumpTime && m_flPumpTime < gpGlobals->time )
+    // Reset when the player lets go of the trigger.
+	if ((m_pPlayer->pev->button & (IN_ATTACK | IN_ATTACK2)) == 0)
 	{
-		// play pumping sound
-		EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG(0,0x1f));
-		m_flPumpTime = 0;
+		ResetEmptySound();
 	}
-	*/
 
-	if (m_flTimeWeaponIdle < UTIL_WeaponTimeBase())
-	{
-		if (m_iClip == 0 && m_fInSpecialReload == 0 && 0 != m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
-		{
-			Reload();
-		}
-		else if (m_fInSpecialReload != 0)
-		{
-			if (m_iClip != 10 && 0 != m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
-			{
-				Reload();
-			}
-			else
-			{
-				// reload debounce has timed out
-				SendWeaponAnim(GLAUNCHER_IDLE);
 
-				// play cocking sound
-				EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG(0, 0x1f));
-				m_fInSpecialReload = 0;
-				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.6;
-			}
-		}
-		else
-		{
-			int iAnim;
-			float flRand = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 0, 1);
-			if (flRand <= 0.8)
-			{
-				iAnim = GLAUNCHER_IDLE;
-				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (60.0 / 12.0); // * RANDOM_LONG(2, 5);
-			}
-			else if (flRand <= 0.95)
-			{
-				iAnim = GLAUNCHER_IDLE;
-				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (20.0 / 9.0);
-			}
-			else
-			{
-				iAnim = GLAUNCHER_IDLE;
-				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (20.0 / 9.0);
-			}
-			SendWeaponAnim(iAnim);
-		}
-	}
+	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
+		return;
+
+	SendWeaponAnim(GLAUNCHER_IDLE);
 }
