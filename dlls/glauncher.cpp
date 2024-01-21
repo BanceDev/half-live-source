@@ -111,10 +111,10 @@ bool CGLauncher::Deploy()
 {
     if (m_iClip == 0)
 	{
-		return DefaultDeploy("models/v_glauncher.mdl", "models/p_glauncher.mdl", RPG_DRAW1, "rpg");
+		return DefaultDeploy("models/v_glauncher.mdl", "models/p_glauncher.mdl", 9, "rpg");
 	}
 
-	return DefaultDeploy("models/v_glauncher.mdl", "models/p_glauncher.mdl", RPG_DRAW1, "rpg");
+	return DefaultDeploy("models/v_glauncher.mdl", "models/p_glauncher.mdl", 9, "rpg");
 }
 
 void CGLauncher::Holster()
@@ -123,7 +123,7 @@ void CGLauncher::Holster()
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
 
-	SendWeaponAnim(RPG_HOLSTER1);
+	SendWeaponAnim(1);
 }
 
 void CGLauncher::Reload()
@@ -149,10 +149,13 @@ void CGLauncher::Reload()
 
 	m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
 
-	const bool iResult = DefaultReload(5, RPG_RELOAD, 2);
+	const bool iResult = DefaultReload(5, 6, 1.2);
 
-	if (iResult)
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	if (iResult) {
+		SendWeaponAnim(7);
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.2;
+	}
+		
 }
 
 void CGLauncher::WeaponIdle()
@@ -167,5 +170,5 @@ void CGLauncher::WeaponIdle()
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;
 
-	SendWeaponAnim(RPG_IDLE);
+	SendWeaponAnim(1);
 }

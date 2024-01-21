@@ -1587,7 +1587,7 @@ void EV_FireGLauncher(event_args_t* args)
 	//Only play the weapon anims if I shot it.
 	if (EV_IsLocal(idx))
 	{
-		gEngfuncs.pEventAPI->EV_WeaponAnimation(GLAUNCHER_FIRE1, 0);
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(3, 0);
 
 		V_PunchAxis(0, -5.0);
 	}
