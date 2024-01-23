@@ -138,6 +138,7 @@ IMPLEMENT_SAVERESTORE( CHealthKit, CItem);
 
 void CMegaHealth::Spawn()
 {
+	pev->classname = MAKE_STRING("item_megahealth");
 	Precache();
 	SET_MODEL(ENT(pev), "models/w_megahealth.mdl");
 	pev->renderfx = kRenderFxGlowShell;

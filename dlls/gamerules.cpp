@@ -315,7 +315,12 @@ void CGameRules::RefreshSkillData()
 	gSkillData.plrDmgRPG = GetSkillCvar("sk_plr_rpg");
 
 	// Gauss gun
-	gSkillData.plrDmgGauss = GetSkillCvar("sk_plr_gauss");
+	if ((int)gamemode.value == 1) {
+		gSkillData.plrDmgGauss = 900;
+	} else {
+		gSkillData.plrDmgGauss = 90;
+	}
+	
 
 	// Egon Gun
 	gSkillData.plrDmgEgonNarrow = GetSkillCvar("sk_plr_egon_narrow");

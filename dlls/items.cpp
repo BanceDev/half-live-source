@@ -264,6 +264,7 @@ class CItemArmor : public CItem
 {
 	void Spawn() override
 	{
+		pev->classname = MAKE_STRING("item_armor");
 		Precache();
 		SET_MODEL(ENT(pev), "models/w_armor.mdl");
 		pev->renderfx = kRenderFxGlowShell;
@@ -419,6 +420,7 @@ class CSuperItem : public CItem
 
 	void Spawn() override
 	{
+		pev->classname = MAKE_STRING("item_super");
 		Precache();
 		SET_MODEL(ENT(pev), "models/w_quad_damage.mdl");
 		pev->renderfx = kRenderFxGlowShell;

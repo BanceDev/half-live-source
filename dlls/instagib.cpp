@@ -77,9 +77,6 @@ void CHalfLifeInstagib::RefreshSkillData()
 	gSkillData.plrDmgEgonWide = 10;
 	gSkillData.plrDmgEgonNarrow = 7;
 
-    // Gauss
-	gSkillData.plrDmgGauss = 900;
-
 	// Hand Grendade
 	gSkillData.plrDmgHandGrenade = 80;
 
@@ -97,6 +94,54 @@ void CHalfLifeInstagib::RefreshSkillData()
 //=========================================================
 bool CHalfLifeInstagib::IsAllowedToSpawn(CBaseEntity* pEntity)
 {
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_9mmAR"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_shotgun"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_glauncher"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_gauss"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_egon"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_rpg"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "weapon_crossbow"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "item_battery"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "item_healthkit"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "item_megahealth"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "item_armor"))
+    {
+        return false;
+    }
+    if (FStrEq(STRING(pEntity->pev->classname), "item_super"))
+    {
+        return false;
+    }
     return true;
 }
 

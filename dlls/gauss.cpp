@@ -23,6 +23,7 @@
 #include "shake.h"
 #include "gamerules.h"
 #include "UserMessages.h"
+#include "skill.h"
 
 LINK_ENTITY_TO_CLASS(weapon_gauss, CGauss);
 
@@ -303,7 +304,12 @@ void CGauss::StartFire()
 
 	if (m_fPrimaryFire)
 	{
+		// fixed damage on primary attack
+#ifdef CLIENT_DLL
+		flDamage = 20;
+#else
 		flDamage = gSkillData.plrDmgGauss;
+#endif
 	}
 
 	if (m_fInAttack != 3)
