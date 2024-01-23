@@ -303,12 +303,7 @@ void CGauss::StartFire()
 
 	if (m_fPrimaryFire)
 	{
-		// fixed damage on primary attack
-#ifdef CLIENT_DLL
-		flDamage = 90;
-#else
-		flDamage = 90;
-#endif
+		flDamage = gSkillData.plrDmgGauss;
 	}
 
 	if (m_fInAttack != 3)

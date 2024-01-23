@@ -146,6 +146,9 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgEgonWide = 10;
 	gSkillData.plrDmgEgonNarrow = 7;
 
+	// Gauss
+	gSkillData.plrDmgGauss = 90;
+
 	// Hand Grendade
 	gSkillData.plrDmgHandGrenade = 80;
 

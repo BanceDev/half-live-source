@@ -373,6 +373,10 @@ CGameRules* InstallGameRules()
 	SERVER_COMMAND("exec game.cfg\n");
 	SERVER_EXECUTE();
 
+	// don't ask why. valve just didnt cook here
+	SERVER_EXECUTE();
+	SERVER_EXECUTE();
+
 	if (0 == gpGlobals->deathmatch)
 	{
 		// generic half-life
@@ -392,12 +396,18 @@ CGameRules* InstallGameRules()
 		{
 			// vanilla deathmatch
 			g_teamplay = false;
+			if ((int)gamemode.value == 1) {
+				return new CHalfLifeInstagib;
+			}
 			return new CHalfLifeMultiplay;
 		}
 		else
 		{
 			// vanilla deathmatch??
 			g_teamplay = false;
+			if ((int)gamemode.value == 1) {
+				return new CHalfLifeInstagib;
+			}
 			return new CHalfLifeMultiplay;
 		}
 	}
