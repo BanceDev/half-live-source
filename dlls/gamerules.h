@@ -388,6 +388,30 @@ public:
 	int DeadPlayerAmmo(CBasePlayer* pPlayer) override;
 };
 
+//=========================================================
+// CHalfLifeUnholy - rules for the basic half life multiplayer
+// competition
+//=========================================================
+class CHalfLifeUnholy : public CHalfLifeMultiplay
+{
+public:
+	CHalfLifeUnholy();
+
+	void RefreshSkillData() override;
+	bool IsAllowedToSpawn(CBaseEntity* pEntity) override;
+	
+
+	// Client spawn/respawn control
+	void PlayerSpawn(CBasePlayer* pPlayer) override;
+	void PlayerThink(CBasePlayer* pPlayer) override;
+
+	// What happens to a dead player's weapons
+	int DeadPlayerWeapons(CBasePlayer* pPlayer) override;
+
+	// What happens to a dead player's ammo
+	int DeadPlayerAmmo(CBasePlayer* pPlayer) override;
+};
+
 inline DLL_GLOBAL CGameRules* g_pGameRules = nullptr;
 inline DLL_GLOBAL bool g_fGameOver;
 inline bool g_teamplay = false;

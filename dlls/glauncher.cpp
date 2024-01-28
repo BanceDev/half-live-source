@@ -11,7 +11,7 @@ LINK_ENTITY_TO_CLASS(weapon_grenade_launcher, CGLauncher)
 
 void CGLauncher::Spawn()
 {
-	pev->classname = MAKE_STRING("weapon_glauncher");
+	//pev->classname = MAKE_STRING("weapon_glauncher");
     Precache();
     m_iId = WEAPON_GLAUNCHER;
 

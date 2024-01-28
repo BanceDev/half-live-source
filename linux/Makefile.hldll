@@ -111,6 +111,7 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/teamplay_gamerules.o \
 	$(HLDLL_OBJ_DIR)/multiplay_gamerules.o \
 	$(HLDLL_OBJ_DIR)/instagib.o \
+	$(HLDLL_OBJ_DIR)/unholy.o \
 	$(HLDLL_OBJ_DIR)/singleplay_gamerules.o \
 	$(HLDLL_OBJ_DIR)/tempmonster.o \
 	$(HLDLL_OBJ_DIR)/tentacle.o \

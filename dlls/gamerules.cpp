@@ -404,6 +404,9 @@ CGameRules* InstallGameRules()
 			if ((int)gamemode.value == 1) {
 				return new CHalfLifeInstagib;
 			}
+			if ((int)gamemode.value == 2) {
+				return new CHalfLifeUnholy;
+			}
 			return new CHalfLifeMultiplay;
 		}
 		else
@@ -412,6 +415,9 @@ CGameRules* InstallGameRules()
 			g_teamplay = false;
 			if ((int)gamemode.value == 1) {
 				return new CHalfLifeInstagib;
+			}
+			if ((int)gamemode.value == 2) {
+				return new CHalfLifeUnholy;
 			}
 			return new CHalfLifeMultiplay;
 		}
