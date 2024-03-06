@@ -1,75 +1,11 @@
-About
+Half-Live Source Code
 ======================
+
+Half-Live is an arena shooter project developed by Bance with the goal of bringing half-life and quake mechanics into a single game. This project is currently on an indefinate break with no current plans to return to it in the future. The source code is public so that if anyone wants to continue the work it is available to them.
+
+This project uses the Half-Life Updated SDK:
 
 [Half-Life Updated](https://github.com/SamVanheer/halflife-updated), [Opposing Force Updated](https://github.com/SamVanheer/halflife-op4-updated) and [Blue Shift Updated](https://github.com/SamVanheer/halflife-bs-updated) are repositories that provide updated versions of the Half-Life SDK, targeted to the 3 Half-Life 1 PC games officially available.
-
-Purpose
-======================
-
-Each repository provides project files compatible with Visual Studio 2019 and 2022, as well as bug fixes. The Opposing Force and Blue Shift projects are reference implementations of their respective games. This means they provide the original features, implemented as they are in the original games, including the many cases of code duplication.
-
-The goal of the Updated repositories is to allow modders to make mods based on these games, while providing bug fixes that could be applied to the official games as well. A mod installation is also provided for each repository to allow players to play these games with all bug fixes applied.
-
-This mod installation includes files that are required when making a mod based on these SDKs.
-
-The following types of changes are **in scope** for this project:
-* Bug fixes
-* Features to improve the game's code (refactoring, generalizing, simplifying). This does not include complete redesigns of systems as this makes it much harder for modders to integrate changes and get started with Half-Life modding
-* Fixing game-breaking bugs in game assets (e.g. soft-locked trigger setups)
-
-The following types of changes are **out of scope**:
-* Graphical upgrades
-* Physics engine changes
-* Other engine changes
-* Gameplay changes
-
-If you need help setting up the SDK or developing a mod please ask on the [TWHL website](https://twhl.info/) or on its [Discord server](https://discord.gg/jEw8EqD).
-
-The TWHL wiki has tutorials to guide you through making a mod: https://twhl.info/wiki/page/Half-Life_Programming_-_Getting_Started
-
-See the `#welcome` channel for more information about the Discord server. Please do not use the `#unified-sdk` channel for general help requests, there are channels for modding help.
-
-See the TWHL thread for status updates about these projects: https://twhl.info/thread/view/20055
-
-Requirements to run mods built with this SDK
-======================
-
-Only the latest Steam version of Half-Life is supported. For the Opposing Force and Blue Shift repositories you will need to own the games and have them installed to use their assets.
-
-Building this SDK
-======================
-
-See [BUILDING.md](BUILDING.md)
-
-Mod installation instructions
-======================
-
-See [INSTALL.md](INSTALL.md)
-
-What isn't supported
-======================
-
-Backwards compatibility with WON and older versions of Steam Half-Life is not supported. Xash isn't supported, but may work. You cannot use Updated clients to play on vanilla servers, you also cannot use vanilla clients to play on Updated servers.
-
-Placing Updated game dlls in vanilla installations is not supported.
-
-These repositories have a limited scope and will not have major changes applied.
-
-Deathmatch Classic and Ricochet
-======================
-
-The source code for Deathmatch Classic and Ricochet is in the original Half-Life SDK. The purpose of these updated repositories is to provide updated versions only for Half-Life and its expansion packs, so the source code for these mods has been removed.
-
-Since the vanilla versions don't compile under newer versions of Visual Studio separate repositories have been made that provide the same updates to make them compile:
-* https://github.com/SamVanheer/dmc-updated
-* https://github.com/SamVanheer/ricochet-updated
-
-Unlike the other updated repositories these only provide basic fixes. No further development and support will be provided.
-
-Changelog
-======================
-
-See [CHANGELOG.md](CHANGELOG.md) and [FULL_UPDATED_CHANGELOG.md](FULL_UPDATED_CHANGELOG.md)
 
 Half Life 1 SDK LICENSE
 ======================
